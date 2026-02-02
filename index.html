@@ -143,6 +143,46 @@
     border-radius: 14px;
     padding: 12px;
   }
+  #memoBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+#memoList {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.memo {
+  margin-bottom: 6px;
+}
+
+.memo-time {
+  font-size: 10px;
+  color: #888;
+}
+
+.memo-input {
+  display: flex;
+  gap: 6px;
+}
+
+.memo-input input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+.memo-input button {
+  border-radius: 12px;
+  padding: 6px 12px;
+}
 </style>
 </head>
 
@@ -177,6 +217,16 @@
   <ul id="annivList"></ul>
 
   <div id="detail" class="hidden"></div>
+  <h3>Memo 💬</h3>
+
+<div id="memoBox">
+  <div id="memoList"></div>
+  <div class="memo-input">
+    <input type="text" id="memoInput" placeholder="짧은 메모를 남겨줘…" />
+    <button onclick="addMemo()">전송</button>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -295,6 +345,42 @@
       <p>📸 여기에 사진을 넣을 수 있어요</p>
     `;
   }
+  /* ===== 메모 (채팅형) ===== */
+const memoListEl = document.getElementById("memoList");
+const memoInput = document.getElementById("memoInput");
+
+let memos = JSON.parse(localStorage.getItem("memos") || "[]");
+
+function renderMemos() {
+  memoListEl.innerHTML = "";
+  memos.forEach(m => {
+    memoListEl.innerHTML += `
+      <div class="memo">
+        <div>${m.text}</div>
+        <div class="memo-time">${m.time}</div>
+      </div>
+    `;
+  });
+  memoListEl.scrollTop = memoListEl.scrollHeight;
+}
+
+function addMemo() {
+  const text = memoInput.value.trim();
+  if (!text) return;
+
+  const time = new Date().toLocaleString();
+  memos.push({ text, time });
+  localStorage.setItem("memos", JSON.stringify(memos));
+
+  memoInput.value = "";
+  renderMemos();
+}
+
+memoInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") addMemo();
+});
+
+renderMemos();
 </script>
 
 </body>

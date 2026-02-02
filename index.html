@@ -158,12 +158,29 @@
 }
 
 .memo {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: #f6f6f6;
+  position: relative;
 }
 
 .memo-time {
   font-size: 10px;
   color: #888;
+}
+
+.memo-delete {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.memo-delete:hover {
+  opacity: 1;
 }
 
 .memo-input {
@@ -353,9 +370,10 @@ let memos = JSON.parse(localStorage.getItem("memos") || "[]");
 
 function renderMemos() {
   memoListEl.innerHTML = "";
-  memos.forEach(m => {
+  memos.forEach((m, index) => {
     memoListEl.innerHTML += `
       <div class="memo">
+        <span class="memo-delete" onclick="deleteMemo(${index})">🗑</span>
         <div>${m.text}</div>
         <div class="memo-time">${m.time}</div>
       </div>
@@ -373,6 +391,12 @@ function addMemo() {
   localStorage.setItem("memos", JSON.stringify(memos));
 
   memoInput.value = "";
+  renderMemos();
+}
+
+function deleteMemo(index) {
+  memos.splice(index, 1);
+  localStorage.setItem("memos", JSON.stringify(memos));
   renderMemos();
 }
 

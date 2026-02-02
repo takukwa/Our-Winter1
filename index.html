@@ -23,15 +23,10 @@ body {
   text-align: center;
 }
 
-.button-row {
-  display: flex;
-  gap: 20px;
-  margin-top: 15px;
-}
-
 button {
-  padding: 8px 22px;
-  border-radius: 20px;
+  padding: 6px 14px;
+  margin: 5px;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
   background: #ddd;
@@ -40,13 +35,6 @@ button {
 button:hover { background: #bbb; }
 
 #home { padding: 20px; }
-
-.dday {
-  background: white;
-  padding: 12px;
-  border-radius: 14px;
-  margin: 15px 0;
-}
 
 .calendar {
   width: 280px;
@@ -115,21 +103,16 @@ button:hover { background: #bbb; }
 <!-- 인트로 -->
 <div id="intro" class="center">
   <h1>눈은 언제까지나 내릴까?</h1>
-  <div class="button-row">
-    <button onclick="enterHome()">Yes</button>
-    <button onclick="showNo()">No</button>
-  </div>
+  <button onclick="enterHome()">Yes</button>
+  <button onclick="showNo()">No</button>
   <p id="noText" class="hidden">눈은 결국 녹아버려.</p>
 </div>
 
 <!-- 홈 -->
 <div id="home" class="hidden">
   <h2>Our Winter ❄️</h2>
+  <p>2023.02.17 부터</p>
 
-  <!-- D-DAY -->
-  <div class="dday" id="ddayBox"></div>
-
-  <!-- 캘린더 -->
   <div class="calendar">
     <div class="calendar-header">
       <button onclick="changeMonth(-1)">&lt;</button>
@@ -142,12 +125,13 @@ button:hover { background: #bbb; }
   <h3 style="margin-top:25px;">Anniversary</h3>
   <ul id="annivList"></ul>
 
+  <!-- 상세 / 사진 영역 -->
   <div id="detail" class="hidden"></div>
 </div>
 
 <script>
 /* ===== 기본 정보 ===== */
-const startDate = new Date(2023, 1, 17); // 2023-02-17 = 1일
+const startDate = new Date(2023, 1, 17);
 const birthdays = [
   { month: 10, day: 30, text: "🎂 한서올 생일" },
   { month: 6, day: 3, text: "🎂 하현우 생일" }
@@ -159,22 +143,10 @@ let current = new Date();
 function enterHome() {
   intro.classList.add("hidden");
   home.classList.remove("hidden");
-  updateDday();
   renderCalendar();
 }
-
 function showNo() {
   noText.classList.remove("hidden");
-}
-
-/* D-DAY 계산 */
-function updateDday() {
-  const today = new Date();
-  const diff = Math.floor((today - startDate) / 86400000) + 1;
-  ddayBox.innerHTML = `
-    <strong>D+${diff}</strong><br>
-    우리가 만난 지 ${diff}일
-  `;
 }
 
 /* 달 이동 */
@@ -183,7 +155,7 @@ function changeMonth(diff) {
   renderCalendar();
 }
 
-/* 캘린더 */
+/* 캘린더 렌더링 */
 function renderCalendar() {
   calendar.innerHTML = "";
   annivList.innerHTML = "";
@@ -207,13 +179,11 @@ function renderCalendar() {
     const cellDate = new Date(year, month, d);
     let label = "", icon = "";
 
-    // 사귄 날
     if (cellDate.getTime() === startDate.getTime()) {
-      label = "❤️ 사귄 날 (1일)";
+      label = "❤️ 사귄 날";
       icon = "❤️";
     }
 
-    // 생일
     birthdays.forEach(b => {
       if (b.month === month && b.day === d) {
         label = b.text;
@@ -221,14 +191,13 @@ function renderCalendar() {
       }
     });
 
-    // 100일 단위
-    const days = Math.floor((cellDate - startDate) / 86400000) + 1;
-    if (days > 1 && days % 100 === 0) {
-      label = `${days}일`;
+    const diff = Math.floor((cellDate - startDate) / 86400000);
+    if (diff > 0 && diff % 100 === 0) {
+      label = `${diff}일`;
       icon = "❄️";
       annivList.innerHTML += `
-        <li onclick="showDetail('${days}일','${cellDate.toLocaleDateString()}')">
-          ❄️ ${days}일 (${cellDate.toLocaleDateString()})
+        <li onclick="showDetail('${diff}일','${cellDate.toLocaleDateString()}')">
+          ❄️ ${diff}일 (${cellDate.toLocaleDateString()})
         </li>`;
     }
 
@@ -239,13 +208,16 @@ function renderCalendar() {
   }
 }
 
-/* 상세 */
+/* Anniversary 상세 */
 function showDetail(title, date) {
   detail.classList.remove("hidden");
   detail.innerHTML = `
     <h4>${title}</h4>
     <p>${date}</p>
     <p>📸 여기에 사진을 넣을 수 있어요</p>
+    <!--
+    <img src="photo.jpg" width="100%">
+    -->
   `;
 }
 </script>

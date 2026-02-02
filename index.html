@@ -200,10 +200,22 @@
   border-radius: 12px;
   padding: 6px 12px;
 }
+
+#snow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 클릭 방해 X */
+  z-index: 5;
+}
+
 </style>
 </head>
 
 <body>
+<canvas id="snow"></canvas>
 
 <!-- ===== 인트로 ===== -->
 <div id="intro" class="center">
@@ -405,6 +417,62 @@ memoInput.addEventListener("keydown", e => {
 });
 
 renderMemos();
+
+/* ===== 눈 효과 ===== */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+
+let w, h;
+let snowflakes = [];
+
+function resizeSnow() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeSnow);
+resizeSnow();
+
+function createSnow() {
+  snowflakes = [];
+  for (let i = 0; i < 80; i++) {
+    snowflakes.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 3 + 1,
+      d: Math.random() + 1
+    });
+  }
+}
+createSnow();
+
+function drawSnow() {
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+  ctx.beginPath();
+
+  snowflakes.forEach(f => {
+    ctx.moveTo(f.x, f.y);
+    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+  });
+
+  ctx.fill();
+  moveSnow();
+}
+
+function moveSnow() {
+  snowflakes.forEach(f => {
+    f.y += Math.pow(f.d, 2) + 0.5;
+    f.x += Math.sin(f.y * 0.01);
+
+    if (f.y > h) {
+      f.y = -10;
+      f.x = Math.random() * w;
+    }
+  });
+}
+
+setInterval(drawSnow, 33);
+
 </script>
 
 </body>

@@ -30,6 +30,16 @@
     
     background: #f4f4f6;
     z-index: 10;
+
+    .fade-out {
+      animation: fadeOut 0.8s ease forwards;
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
+    }
+
   }
 
   .button-row {
@@ -211,6 +221,27 @@
   z-index: 5;
 }
 
+body.night {
+  background: #0f1220;
+  color: #e6e6f0;
+}
+
+body.night .calendar,
+body.night .dday,
+body.night #memoBox,
+body.night #detail {
+  background: #1b1f3a;
+  color: #e6e6f0;
+}
+
+#themeBtn {
+  margin: 10px 0;
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+}
+
 </style>
 </head>
 
@@ -230,6 +261,8 @@
 <!-- ===== 홈 ===== -->
 <div id="home" class="hidden">
   <h2>Our Winter ❄️</h2>
+
+  <button id="themeBtn" onclick="toggleTheme()">🌙 밤 모드</button>
 
   <div class="dday" id="ddayBox"></div>
 
@@ -270,11 +303,17 @@
 
   /* ===== 인트로 ===== */
   function enterHome() {
-    document.getElementById("intro").style.display = "none";
+  const intro = document.getElementById("intro");
+  intro.classList.add("fade-out");
+
+  setTimeout(() => {
+    intro.style.display = "none";
     document.getElementById("home").classList.remove("hidden");
     updateDday();
     renderCalendar();
-  }
+  }, 800);
+}
+
 
   function showNo() {
     document.getElementById("noText").classList.remove("hidden");
@@ -472,6 +511,14 @@ function moveSnow() {
 }
 
 setInterval(drawSnow, 33);
+
+function toggleTheme() {
+  document.body.classList.toggle("night");
+  const btn = document.getElementById("themeBtn");
+  btn.textContent = document.body.classList.contains("night")
+    ? "🤍 낮 모드"
+    : "🌙 밤 모드";
+}
 
 </script>
 

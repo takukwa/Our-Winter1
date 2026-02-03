@@ -302,68 +302,11 @@ body.night #themeBtn:hover {
   display: none;
 }
 
-/* ❄️ 화이트아웃 효과 */
-#whiteout {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 20;
-}
-
-.white-show {
-  animation: whiteIn 1.2s ease forwards;
-}
-
-.white-hide {
-  animation: whiteOut 0.8s ease forwards;
-}
-
-@keyframes whiteIn {
-  to { opacity: 1; }
-}
-
-@keyframes whiteOut {
-  to { opacity: 0; }
-}
-
-#whiteText {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  color: #aaa;          /* 연한 회색 */
-  font-size: 26px;
-  letter-spacing: 2px;
-
-  opacity: 0;           /* 처음엔 안 보이게 */
-  z-index: 21;          /* whiteout(20)보다 위 */
-  pointer-events: none; /* 클릭 방해 X */
-}
-
-.text-show {
-  animation: textFade 1.4s ease forwards;
-}
-
-@keyframes textFade {
-  0%   { opacity: 0; }
-  30%  { opacity: 1; }
-  70%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 </style>
 </head>
 
 <body>
 <canvas id="snow"></canvas>
-<div id="whiteout"></div>
-<div id="whiteText">Our Winter</div>
 
 <!-- ===== 인트로 ===== -->
 <div id="intro" class="center">
@@ -419,43 +362,12 @@ body.night #themeBtn:hover {
   let current = new Date();
 
   /* ===== 인트로 ===== */
-  function introSnow() {
-  snowCount = 200;   // 폭설
-  snowSpeed = 3;     // 빠르게
-  createSnow();
-}
-
   function enterHome() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("home").classList.remove("hidden");
 
-  // 1️⃣ 폭설 시작
-  snowStorm();
-
-  // 2️⃣ 화이트아웃 시작
-  const white = document.getElementById("whiteout");
-  setTimeout(() => {
-    snowPaused = true;                 // ⭐ 눈 멈춤
-    white.classList.add("white-show");
-  }, 1400);
-
-  // 3️⃣ 인트로 제거 + 홈 등장
-  setTimeout(() => {
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("home").classList.remove("hidden");
-
-    updateDday();
-    renderCalendar();
-  }, 1800);
-
-  // 4️⃣ 화이트아웃 종료 + 눈 정상화
-  setTimeout(() => {
-    white.classList.remove("white-show");
-    white.classList.add("white-hide");
-
-    snowPaused = false;      // ⭐ 눈 다시 시작
-    snowCount = 80;
-    snowSpeed = 1;
-    createSnow();
-  }, 2300);
+  updateDday();
+  renderCalendar();
 }
 
   function showNo() {
@@ -609,29 +521,6 @@ let snowflakes = [];
 let snowCount = 80;      // 기본 눈 개수
 let snowSpeed = 1;      // 기본 속도
 
-function addSnow(amount) {
-  for (let i = 0; i < amount; i++) {
-    snowflakes.push({
-      x: Math.random() * w,
-      y: -10,                 // 화면 위에서 떨어지게
-      r: Math.random() * 3 + 1,
-      d: Math.random() + 1
-    });
-  }
-}
-
-function snowStorm() {
-  let step = 0;
-  const storm = setInterval(() => {
-    step++;
-
-    snowSpeed += 0.25;   // 속도만 증가
-    addSnow(20);         // ❄️ 눈을 "추가"
-
-    if (step >= 12) clearInterval(storm);
-  }, 120);
-}
-
 function resizeSnow() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
@@ -687,15 +576,13 @@ function toggleTheme() {
   localStorage.setItem("theme", isNight ? "night" : "day");
 
   const btn = document.getElementById("themeBtn");
-  btn.textContent = isNight ? "🌞" : "🌙";
+  btn.textContent = isNight ? "☀️" : "🌙";
 }
-
-introSnow();
 
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "night") {
   document.body.classList.add("night");
-  document.getElementById("themeBtn").textContent = "🌞";
+  document.getElementById("themeBtn").textContent = "☀️";
 }
 
 </script>

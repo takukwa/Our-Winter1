@@ -223,7 +223,7 @@
 
 body.night {
   background: #0f1220;
-  color: #e6e6f0;
+  color: #cfd3ff;
 }
 
 body.night .calendar,
@@ -262,7 +262,7 @@ body.night #detail {
 <div id="home" class="hidden">
   <h2>Our Winter ❄️</h2>
 
-  <button id="themeBtn" onclick="toggleTheme()">🌙 밤 모드</button>
+  <button id="themeBtn" onclick="toggleTheme()">🌙</button>
 
   <div class="dday" id="ddayBox"></div>
 
@@ -516,8 +516,8 @@ function toggleTheme() {
   document.body.classList.toggle("night");
   const btn = document.getElementById("themeBtn");
   btn.textContent = document.body.classList.contains("night")
-    ? "🤍 낮 모드"
-    : "🌙 밤 모드";
+    ? "☀️"
+    : "🌙";
 }
 
 </script>

@@ -101,10 +101,10 @@
   }
 
   .day {
-    padding: 6px 0;
-    border-radius: 6px;
-    position: relative;
-    cursor: default;
+  padding: 6px 0;
+  border-radius: 6px;
+  position: relative;
+  cursor: default;
   }
 
   .mark {
@@ -115,20 +115,6 @@
   .day span {
     font-size: 10px;
     display: block;
-  }
-
-  .day:hover::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 50%;
-    bottom: -28px;
-    transform: translateX(-50%);
-    background: #333;
-    color: #fff;
-    padding: 3px 6px;
-    border-radius: 6px;
-    font-size: 10px;
-    white-space: nowrap;
   }
 
   /* ===== Anniversary ===== */
@@ -294,6 +280,26 @@ body.night #themeBtn {
 /* hover 효과 */
 body.night #themeBtn:hover {
   background: #3a4080;
+}
+
+/* ✅ 기념일(mark) 있는 날짜만 말풍선 표시 */
+.day.mark:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 50;          /* ⭐ 가려짐 방지 핵심 */
+}
+
+.day.mark[data-text=""]::after {
+  display: none;
 }
 
 </style>

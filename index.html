@@ -302,11 +302,41 @@ body.night #themeBtn:hover {
   display: none;
 }
 
+/* ❄️ 화이트아웃 효과 */
+#whiteout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.white-show {
+  animation: whiteIn 1.2s ease forwards;
+}
+
+.white-hide {
+  animation: whiteOut 0.8s ease forwards;
+}
+
+@keyframes whiteIn {
+  to { opacity: 1; }
+}
+
+@keyframes whiteOut {
+  to { opacity: 0; }
+}
+
 </style>
 </head>
 
 <body>
 <canvas id="snow"></canvas>
+<div id="whiteout"></div>
 
 <!-- ===== 인트로 ===== -->
 <div id="intro" class="center">
@@ -369,20 +399,34 @@ body.night #themeBtn:hover {
 }
 
   function enterHome() {
-  const intro = document.getElementById("intro");
-  intro.classList.add("fade-out");
+  // 1️⃣ 눈 점점 폭설
+  snowStorm();
 
+  // 2️⃣ 화면 하얗게
+  const white = document.getElementById("whiteout");
   setTimeout(() => {
-    intro.style.display = "none";
+    white.classList.add("white-show");
+  }, 600);
+
+  // 3️⃣ 인트로 제거 + 홈 등장
+  setTimeout(() => {
+    document.getElementById("intro").style.display = "none";
     document.getElementById("home").classList.remove("hidden");
 
-    snowCount = 80;    // 눈 정상화
+    // 눈 정상화
+    snowCount = 80;
     snowSpeed = 1;
     createSnow();
 
     updateDday();
     renderCalendar();
-  }, 800);
+  }, 1800);
+
+  // 4️⃣ 하얀 화면 페이드아웃
+  setTimeout(() => {
+    white.classList.remove("white-show");
+    white.classList.add("white-hide");
+  }, 2000);
 }
 
   function showNo() {
@@ -535,7 +579,18 @@ let w, h;
 let snowflakes = [];
 let snowCount = 80;      // 기본 눈 개수
 let snowSpeed = 1;      // 기본 속도
+function snowStorm() {
+  let step = 0;
+  const storm = setInterval(() => {
+    step++;
 
+    snowCount += 15;   // 눈 점점 증가
+    snowSpeed += 0.4;  // 점점 빨라짐
+    createSnow();
+
+    if (step >= 10) clearInterval(storm);
+  }, 120);
+}
 
 function resizeSnow() {
   w = canvas.width = window.innerWidth;

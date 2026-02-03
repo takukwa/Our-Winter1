@@ -362,6 +362,12 @@ body.night #themeBtn:hover {
   let current = new Date();
 
   /* ===== 인트로 ===== */
+  function introSnow() {
+  snowCount = 200;   // 폭설
+  snowSpeed = 3;     // 빠르게
+  createSnow();
+}
+
   function enterHome() {
   const intro = document.getElementById("intro");
   intro.classList.add("fade-out");
@@ -369,11 +375,15 @@ body.night #themeBtn:hover {
   setTimeout(() => {
     intro.style.display = "none";
     document.getElementById("home").classList.remove("hidden");
+
+    snowCount = 80;    // 눈 정상화
+    snowSpeed = 1;
+    createSnow();
+
     updateDday();
     renderCalendar();
   }, 800);
 }
-
 
   function showNo() {
     document.getElementById("noText").classList.remove("hidden");
@@ -523,6 +533,9 @@ const ctx = canvas.getContext("2d");
 
 let w, h;
 let snowflakes = [];
+let snowCount = 80;      // 기본 눈 개수
+let snowSpeed = 1;      // 기본 속도
+
 
 function resizeSnow() {
   w = canvas.width = window.innerWidth;
@@ -533,7 +546,7 @@ resizeSnow();
 
 function createSnow() {
   snowflakes = [];
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < snowCount; i++) {
     snowflakes.push({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -560,7 +573,7 @@ function drawSnow() {
 
 function moveSnow() {
   snowflakes.forEach(f => {
-    f.y += Math.pow(f.d, 2) + 0.5;
+    f.y += Math.pow(f.d, 2) + 0.5 * snowSpeed;
     f.x += Math.sin(f.y * 0.01);
 
     if (f.y > h) {
@@ -574,10 +587,20 @@ setInterval(drawSnow, 33);
 
 function toggleTheme() {
   document.body.classList.toggle("night");
+
+  const isNight = document.body.classList.contains("night");
+  localStorage.setItem("theme", isNight ? "night" : "day");
+
   const btn = document.getElementById("themeBtn");
-  btn.textContent = document.body.classList.contains("night")
-    ? "☀️"
-    : "🌙";
+  btn.textContent = isNight ? "🌞" : "🌙";
+}
+
+introSnow();
+
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "night") {
+  document.body.classList.add("night");
+  document.getElementById("themeBtn").textContent = "🌞";
 }
 
 </script>

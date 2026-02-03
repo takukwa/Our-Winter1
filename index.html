@@ -331,12 +331,39 @@ body.night #themeBtn:hover {
   to { opacity: 0; }
 }
 
+#whiteText {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: #aaa;          /* 연한 회색 */
+  font-size: 26px;
+  letter-spacing: 2px;
+
+  opacity: 0;           /* 처음엔 안 보이게 */
+  z-index: 21;          /* whiteout(20)보다 위 */
+  pointer-events: none; /* 클릭 방해 X */
+}
+
+.text-show {
+  animation: textFade 1.4s ease forwards;
+}
+
+@keyframes textFade {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 </style>
 </head>
 
 <body>
 <canvas id="snow"></canvas>
 <div id="whiteout"></div>
+<div id="whiteText">Our Winter</div>
 
 <!-- ===== 인트로 ===== -->
 <div id="intro" class="center">
@@ -399,34 +426,36 @@ body.night #themeBtn:hover {
 }
 
   function enterHome() {
-  // 1️⃣ 눈 점점 폭설
+
+  // 1️⃣ 폭설 시작
   snowStorm();
 
-  // 2️⃣ 화면 하얗게
+  // 2️⃣ 화이트아웃 시작
   const white = document.getElementById("whiteout");
   setTimeout(() => {
-  white.classList.add("white-show");
-}, 1400);
+    snowPaused = true;                 // ⭐ 눈 멈춤
+    white.classList.add("white-show");
+  }, 1400);
 
   // 3️⃣ 인트로 제거 + 홈 등장
   setTimeout(() => {
     document.getElementById("intro").style.display = "none";
     document.getElementById("home").classList.remove("hidden");
 
-    // 눈 정상화
-    snowCount = 80;
-    snowSpeed = 1;
-    createSnow();
-
     updateDday();
     renderCalendar();
   }, 1800);
 
-  // 4️⃣ 하얀 화면 페이드아웃
+  // 4️⃣ 화이트아웃 종료 + 눈 정상화
   setTimeout(() => {
     white.classList.remove("white-show");
     white.classList.add("white-hide");
-  }, 2000);
+
+    snowPaused = false;      // ⭐ 눈 다시 시작
+    snowCount = 80;
+    snowSpeed = 1;
+    createSnow();
+  }, 2300);
 }
 
   function showNo() {
@@ -579,16 +608,27 @@ let w, h;
 let snowflakes = [];
 let snowCount = 80;      // 기본 눈 개수
 let snowSpeed = 1;      // 기본 속도
+
+function addSnow(amount) {
+  for (let i = 0; i < amount; i++) {
+    snowflakes.push({
+      x: Math.random() * w,
+      y: -10,                 // 화면 위에서 떨어지게
+      r: Math.random() * 3 + 1,
+      d: Math.random() + 1
+    });
+  }
+}
+
 function snowStorm() {
   let step = 0;
   const storm = setInterval(() => {
     step++;
 
-    snowCount += 15;   // 눈 점점 증가
-    snowSpeed += 0.4;  // 점점 빨라짐
-    createSnow();
+    snowSpeed += 0.25;   // 속도만 증가
+    addSnow(20);         // ❄️ 눈을 "추가"
 
-    if (step >= 10) clearInterval(storm);
+    if (step >= 12) clearInterval(storm);
   }, 120);
 }
 

@@ -344,7 +344,7 @@ body.night #themeBtn:hover {
 <div id="memoBox">
   <div id="memoList"></div>
   <div class="memo-input">
-    <input type="text" id="memoInput" placeholder="짧은 메모를 남겨줘…" />
+    <input type="text" id="memoInput" placeholder="할 일은 여기 써두자." />
     <button onclick="addMemo()">전송</button>
   </div>
 </div>
@@ -355,8 +355,8 @@ body.night #themeBtn:hover {
   /* ===== 기본 날짜 ===== */
   const startDate = new Date(2023, 1, 17); // 2023-02-17 = 1일
   const birthdays = [
-    { m: 10, d: 30, text: "🎂 한서올 생일" },
-    { m: 6, d: 3, text: "🎂 하현우 생일" }
+    { m: 10, d: 30, text: "🎂 서올 생일" },
+    { m: 6, d: 3, text: "🎂 현우 생일" }
   ];
 
   let current = new Date();
@@ -384,7 +384,7 @@ body.night #themeBtn:hover {
     const today = new Date();
     const days = Math.floor((today - startDate) / 86400000) + 1;
     document.getElementById("ddayBox").innerHTML =
-      `<strong>D+${days}</strong><br>우리가 만난 지 ${days}일`;
+      `<strong>D+${days}</strong><br>눈이 내린 지 ${days}일`;
   }
 
   /* ===== 캘린더 이동 ===== */

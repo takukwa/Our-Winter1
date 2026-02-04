@@ -35,16 +35,6 @@
     background: #f4f4f6;
     z-index: 10;
   }
-  
-  .fade-out {
-    animation: fadeOut 0.8s ease forwards;
-  }
-  
-  @keyframes fadeOut {
-    to {
-      opacity: 0;
-    }
-  }
 
   .button-row {
     display: flex;
@@ -64,7 +54,6 @@
   cursor: pointer;
   font-size: 15px;
 }
-
 
   button:hover { background: #bbb; }
 
@@ -330,10 +319,6 @@ body {
 }
 
 /* ===== 프로필 ===== */
-.hidden {
-  display: none;
-}
-
 .profile-modal {
   position: fixed;
   top: 0;
@@ -370,29 +355,9 @@ body.night .profile-box {
   margin: 0 auto 10px;
 }
 
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-
-  padding: 6px 14px;
-  border-radius: 999px;   /* 누운 알약 */
-
-  background: #e5e5e5;    /* ⭐ 낮 모드 색 */
-  color: #333;
-
-  border: none;
-  cursor: pointer;
-}
-
 .hidden {
     display: none;
   }
-
-body.night .close-btn {
-  background: #2a2f5a;
-  color: #ffffff;
-}
 
 body.night .button-row button {
   background: #2a2f5a;
@@ -421,48 +386,6 @@ body.night .memo-input button {
 
 body.night .memo-input button:hover {
   background: #3a4080;
-}
-
-/* 3️⃣ 밤 모드 – 프로필 닫기(X) 버튼 (화살표 버튼과 동일 톤) */
-body.night .close-btn {
-  color: #ffffff;
-  background: #2a2f5a;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-}
-
-body.night .close-btn:hover {
-  background: #3a4080;
-}
-
-/* ✅ 공통 아이콘 버튼 (화살표 / X / 낮밤 버튼용) */
-.icon-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #2a2f5a;
-  border: none;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 18px;
-  line-height: 1;
-  padding: 0;
-}
-.icon-btn:hover {
-  background: #3a4080;
-}
-
-/* 🌙 밤 모드에서도 동일 톤 유지 */
-body.night .icon-btn {
-  background: #2a2f5a;
-  color: #ffffff;
 }
 
 /* ✅ 낮 모드 기본 X 버튼 */

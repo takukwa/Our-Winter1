@@ -317,6 +317,53 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* ===== 프로필 ===== */
+.profile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.profile-box {
+  background: #fff;
+  width: 90%;
+  max-width: 320px;
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+}
+
+body.night .profile-box {
+  background: #1b1f3a;
+  color: #fff;
+}
+
+.profile-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ddd;
+  margin: 0 auto 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
 </style>
 </head>
 
@@ -339,6 +386,11 @@ body {
 
   <button id="themeBtn" onclick="toggleTheme()">🌙</button>
 
+  <div class="button-row">
+    <button onclick="openProfile('a')">서올</button>
+    <button onclick="openProfile('b')">현우</button>
+  </div>
+
   <div class="dday" id="ddayBox"></div>
 
   <div class="calendar">
@@ -348,6 +400,12 @@ body {
       <button onclick="moveMonth(1)">&gt;</button>
     </div>
     <div class="days" id="calendar"></div>
+    <div id="profileModal" class="hidden profile-modal">
+      <div class="profile-box">
+        <button class="close-btn" onclick="closeProfile()">✕</button>
+        <div id="profileContent"></div>
+      </div>
+    </div>
   </div>
 
   <h3>Anniversary</h3>
@@ -598,6 +656,32 @@ const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "night") {
   document.body.classList.add("night");
   document.getElementById("themeBtn").textContent = "☀️";
+}
+
+<script>
+function openProfile(who) {
+  const box = document.getElementById("profileModal");
+  const content = document.getElementById("profileContent");
+
+  if (who === "a") {
+    content.innerHTML = `
+      <div class="profile-img"></div>
+      <h3>서올</h3>
+      <p>❄️ 겨울을 좋아하는 사람</p>
+    `;
+  } else {
+    content.innerHTML = `
+      <div class="profile-img"></div>
+      <h3>현우</h3>
+      <p>☕ 따뜻한 커피를 좋아해</p>
+    `;
+  }
+
+  box.classList.remove("hidden");
+}
+
+function closeProfile() {
+  document.getElementById("profileModal").classList.add("hidden");
 }
 
 </script>

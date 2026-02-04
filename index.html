@@ -400,12 +400,6 @@ body.night .profile-box {
       <button onclick="moveMonth(1)">&gt;</button>
     </div>
     <div class="days" id="calendar"></div>
-    <div id="profileModal" class="hidden profile-modal">
-      <div class="profile-box">
-        <button class="close-btn" onclick="closeProfile()">✕</button>
-        <div id="profileContent"></div>
-      </div>
-    </div>
   </div>
 
   <h3>Anniversary</h3>
@@ -421,6 +415,13 @@ body.night .profile-box {
     <button onclick="addMemo()">전송</button>
   </div>
 </div>
+
+<div id="profileModal" class="hidden profile-modal">
+      <div class="profile-box">
+        <button class="close-btn" onclick="closeProfile()">✕</button>
+        <div id="profileContent"></div>
+      </div>
+    </div>
 
 </div>
 
@@ -683,7 +684,6 @@ function openProfile(who) {
 function closeProfile() {
   document.getElementById("profileModal").classList.add("hidden");
 }
-
 </script>
 
 </body>

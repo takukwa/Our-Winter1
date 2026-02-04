@@ -659,14 +659,12 @@ function moveSnow() {
 
 setInterval(drawSnow, 33);
 
+/* 테마 */
 function toggleTheme() {
   document.body.classList.toggle("night");
-
   const isNight = document.body.classList.contains("night");
   localStorage.setItem("theme", isNight ? "night" : "day");
-
-  const btn = document.getElementById("themeBtn");
-  btn.textContent = isNight ? "☀️" : "🌙";
+  document.getElementById("themeBtn").textContent = isNight ? "☀️" : "🌙";
 }
 
 const savedTheme = localStorage.getItem("theme");
@@ -675,9 +673,15 @@ if (savedTheme === "night") {
   document.getElementById("themeBtn").textContent = "☀️";
 }
 
+/* ✅ 프로필 (이게 반드시 위 에러 없이 읽혀야 함) */
 function openProfile(who) {
   const box = document.getElementById("profileModal");
   const content = document.getElementById("profileContent");
+
+  if (!box || !content) {
+    alert("프로필 요소를 찾지 못했어요");
+    return;
+  }
 
   if (who === "a") {
     content.innerHTML = `
@@ -692,6 +696,13 @@ function openProfile(who) {
       <p>☕ 따뜻한 커피를 좋아해</p>
     `;
   }
+
+  box.classList.remove("hidden");
+}
+
+function closeProfile() {
+  document.getElementById("profileModal").classList.add("hidden");
+}
 
   box.classList.remove("hidden"); // 열기
   box.classList.add("hidden");    // 닫기

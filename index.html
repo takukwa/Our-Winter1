@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Our Winter</title>
 
 <style>
@@ -58,22 +59,22 @@
   }
 
   button {
-    padding: 8px 22px;
-    border-radius: 20px;
-    border: none;
-    background: #ddd;
-    cursor: pointer;
-    font-size: 14px;
-  }
+  padding: 10px 26px;
+  border-radius: 20px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+  font-size: 15px;
+}
 
   button:hover { background: #bbb; }
 
   /* ===== 홈 ===== */
   #home {
-    padding: 20px;
-    max-width: 360px;
-    margin: 0 auto;
-  }
+  padding: 16px;
+  max-width: 420px;
+  margin: 0 auto;
+}
 
   .dday {
     background: #fff;
@@ -106,11 +107,12 @@
   }
 
   .day {
-  padding: 6px 0;
+  padding: 10px 0;
   border-radius: 6px;
   position: relative;
   cursor: default;
-  }
+  font-size: 14px;
+}
 
   .mark {
     background: #e1ebff;
@@ -305,6 +307,14 @@ body.night #themeBtn:hover {
 
 .day.mark[data-text=""]::after {
   display: none;
+}
+
+input {
+  font-size: 16px;
+}
+
+body {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 </style>

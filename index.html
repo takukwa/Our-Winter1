@@ -226,16 +226,16 @@ body.night #detail {
 }
 
 #themeBtn {
-  position: fixed;      /* 화면 기준으로 고정 */
-  top: 14px;            /* 위에서 14px */
-  right: 14px;          /* 오른쪽에서 14px */
+  position: fixed;
+  top: 16px;
+  right: 16px;
 
   padding: 8px 14px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
   font-size: 16px;
-  z-index: 30;          /* 다른 요소 위로 */
+ z-index: 30;
 }
 
 /* 🌙 밤 모드 캘린더 기념일 가독성 개선 */
@@ -363,7 +363,7 @@ body.night .profile-box {
 
 .close-btn {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 12px;
   border: none;
   background: none;
@@ -423,6 +423,30 @@ body.night .close-btn:hover {
   background: #3a4080;
 }
 
+/* ✅ 공통 아이콘 버튼 (화살표 / X / 낮밤 버튼용) */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2a2f5a;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: #3a4080;
+}
+
+/* 🌙 밤 모드에서도 동일 톤 유지 */
+body.night .icon-btn {
+  background: #2a2f5a;
+  color: #ffffff;
+}
+  
 </style>
 </head>
 
@@ -443,7 +467,7 @@ body.night .close-btn:hover {
 <div id="home" class="hidden">
   <h2>Our Winter ❄️</h2>
 
-  <button id="themeBtn" onclick="toggleTheme()" style="display:none">🌙</button>
+  <button id="themeBtn" class="icon-btn" onclick="toggleTheme()">🌙</button>
 
   <div class="button-row">
     <button onclick="openProfile('a')">서올</button>
@@ -477,7 +501,7 @@ body.night .close-btn:hover {
 
 <div id="profileModal" class="hidden profile-modal">
       <div class="profile-box">
-        <button class="close-btn" onclick="closeProfile()">✕</button>
+        <button class="close-btn icon-btn" onclick="closeProfile()">✕</button>
         <div id="profileContent"></div>
       </div>
     </div>

@@ -53,7 +53,7 @@
   background: #e5e5e5;   /* 기존 #ddd 보다 밝게 */
   cursor: pointer;
   font-size: 15px;
-}
+  }
 
   button:hover { background: #bbb; }
 
@@ -62,7 +62,7 @@
   padding: 16px;
   max-width: 420px;
   margin: 0 auto;
-}
+  }
 
   .dday {
     background: #fff;
@@ -100,7 +100,7 @@
   position: relative;
   cursor: default;
   font-size: 14px;
-}
+  }
 
   .mark {
     background: #e1ebff;
@@ -134,65 +134,66 @@
     border-radius: 14px;
     padding: 12px;
   }
+  
   #memoBox {
   background: #fff;
   border-radius: 16px;
   padding: 12px;
   margin-top: 10px;
-}
-
-#memoList {
+  }
+  
+  #memoList {
   max-height: 180px;
   overflow-y: auto;
   font-size: 13px;
   margin-bottom: 8px;
-}
-
-.memo {
+  }
+  
+  .memo {
   margin-bottom: 8px;
   padding: 6px 8px;
   border-radius: 10px;
   background: #f6f6f6;
   position: relative;
-}
-
-.memo-time {
+  }
+  
+  .memo-time {
   font-size: 10px;
   color: #888;
-}
-
-.memo-delete {
+  }
+  
+  .memo-delete {
   position: absolute;
   top: 6px;
   right: 8px;
   cursor: pointer;
   font-size: 12px;
   opacity: 0.6;
-}
-
-.memo-delete:hover {
+  }
+  
+  .memo-delete:hover {
   opacity: 1;
-}
-
-.memo-input {
+  }
+  
+  .memo-input {
   display: flex;
   gap: 6px;
-}
-
-.memo-input input {
+  }
+  
+  .memo-input input {
   flex: 1;
   padding: 6px 10px;
   border-radius: 12px;
   border: 1px solid #ccc;
   font-size: 13px;
-}
-
-.memo-input button {
+  }
+  
+  .memo-input button {
   border-radius: 12px;
   padding: 6px 12px;
-}
-
-#snow {
+  }
+  
+  #snow {
   position: fixed;
   top: 0;
   left: 0;
@@ -200,225 +201,225 @@
   height: 100%;
   pointer-events: none; /* 클릭 방해 X */
   z-index: 5;
-}
-
-body.night {
+  }
+  
+  body.night {
   background: #0f1220;
   color: #cfd3ff;
-}
+  }
+  
+  body.night .calendar,
+  body.night .dday,
+  body.night #memoBox,
+  body.night #detail {
+    background: #1b1f3a;
+    color: #e6e6f0;
+  }
+  
+  #themeBtn {
+    position: fixed;
+    top: 14px;
+    right: 14px;
 
-body.night .calendar,
-body.night .dday,
-body.night #memoBox,
-body.night #detail {
-  background: #1b1f3a;
-  color: #e6e6f0;
-}
+    height: 36px;
+    padding: 0 16px;          /* ← 알약 핵심 */
+    border-radius: 999px;    /* ← 누운 알약 */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 18px;
+    line-height: 1;
+    
+    background: #e5e5e5;     /* 낮 모드 */
+    color: #333;
+    
+    border: none;
+    cursor: pointer;
+    z-index: 30;
+  }
+  
+  /* 🌙 밤 모드 캘린더 기념일 가독성 개선 */
+  body.night .day.mark {
+    background: #2a2f5a;   /* 어두운 블루 */
+    color: #ffffff;       /* 글자 선명하게 */
+  }
+  
+  body.night .day.mark span {
+    opacity: 0.9;
+  }
+  
+  /* 🌙 밤 모드 메모창 가독성 개선 */
+  body.night .memo {
+    background: #2a2f5a;   /* 캘린더 기념일 칸과 동일 톤 */
+    color: #ffffff;
+  }
+  
+  body.night #memoBox {
+    background: #1b1f3a;
+  }
+  
+  body.night .memo-input input {
+    background: #2a2f5a;
+    color: #ffffff;
+    border: 1px solid #3a4080;
+  }
+  
+  body.night .memo-input input::placeholder {
+    color: #b8bcff;
+  }
+  
+  /* 🌙 밤 모드 – 캘린더 화살표 버튼 */
+  body.night .calendar-header button {
+    background: #2a2f5a;
+    color: #ffffff;
+    border: none;
+  }
+  
+  /* hover 시 살짝 밝게 */
+  body.night .calendar-header button:hover {
+    background: #3a4080;
+  }
+  
+  body.night #themeBtn {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
+  
+  body.night #themeBtn:hover {
+    background: #3a4080;
+  }
+  
+  /* ✅ 기념일(mark) 있는 날짜만 말풍선 표시 */
+  .day.mark:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 50%;
+    bottom: -34px;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 4px 7px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 50;          /* ⭐ 가려짐 방지 핵심 */
+  }
+  
+  .day.mark[data-text=""]::after {
+    display: none;
+  }
+  
+  input {
+    font-size: 16px;
+  }
+  
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* ===== 프로필 ===== */
+  .profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+  }
+  
+  .profile-box {
+    background: #fff;
+    width: 90%;
+    max-width: 320px;
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+    position: relative;
+  }
 
-#themeBtn {
-  position: fixed;
-  top: 14px;
-  right: 14px;
+  body.night .profile-box {
+    background: #1b1f3a;
+    color: #fff;
+  }
 
-  height: 36px;
-  padding: 0 16px;          /* ← 알약 핵심 */
-  border-radius: 999px;    /* ← 누운 알약 */
+  .profile-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #ddd;
+    margin: 0 auto 10px;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 18px;
-  line-height: 1;
-
-  background: #e5e5e5;     /* 낮 모드 */
-  color: #333;
-
-  border: none;
-  cursor: pointer;
-  z-index: 30;
-}
-
-/* 🌙 밤 모드 캘린더 기념일 가독성 개선 */
-body.night .day.mark {
-  background: #2a2f5a;   /* 어두운 블루 */
-  color: #ffffff;       /* 글자 선명하게 */
-}
-
-body.night .day.mark span {
-  opacity: 0.9;
-}
-
-/* 🌙 밤 모드 메모창 가독성 개선 */
-body.night .memo {
-  background: #2a2f5a;   /* 캘린더 기념일 칸과 동일 톤 */
-  color: #ffffff;
-}
-
-body.night #memoBox {
-  background: #1b1f3a;
-}
-
-body.night .memo-input input {
-  background: #2a2f5a;
-  color: #ffffff;
-  border: 1px solid #3a4080;
-}
-
-body.night .memo-input input::placeholder {
-  color: #b8bcff;
-}
-
-/* 🌙 밤 모드 – 캘린더 화살표 버튼 */
-body.night .calendar-header button {
-  background: #2a2f5a;
-  color: #ffffff;
-  border: none;
-}
-
-/* hover 시 살짝 밝게 */
-body.night .calendar-header button:hover {
-  background: #3a4080;
-}
-
-body.night #themeBtn {
-  background: #2a2f5a;
-  color: #ffffff;
-}
-
-body.night #themeBtn:hover {
-  background: #3a4080;
-}
-
-/* ✅ 기념일(mark) 있는 날짜만 말풍선 표시 */
-.day.mark:hover::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 50%;
-  bottom: -34px;
-  transform: translateX(-50%);
-  background: #333;
-  color: #fff;
-  padding: 4px 7px;
-  border-radius: 6px;
-  font-size: 10px;
-  white-space: nowrap;
-  z-index: 50;          /* ⭐ 가려짐 방지 핵심 */
-}
-
-.day.mark[data-text=""]::after {
-  display: none;
-}
-
-input {
-  font-size: 16px;
-}
-
-body {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* ===== 프로필 ===== */
-.profile-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-}
-
-.profile-box {
-  background: #fff;
-  width: 90%;
-  max-width: 320px;
-  border-radius: 18px;
-  padding: 16px;
-  text-align: center;
-  position: relative;
-}
-
-body.night .profile-box {
-  background: #1b1f3a;
-  color: #fff;
-}
-
-.profile-img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #ddd;
-  margin: 0 auto 10px;
-}
-
-.hidden {
+  .hidden {
     display: none;
   }
 
-body.night .button-row button {
-  background: #2a2f5a;
-  color: #ffffff;
-}
+  body.night .button-row button {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
 
-body.night .button-row button:hover {
-  background: #3a4080;
-}
+  body.night .button-row button:hover {
+    background: #3a4080;
+  }
 
-body.night .profile-modal {
-  background: rgba(0,0,0,0.6);
-}
+  body.night .profile-modal {
+    background: rgba(0,0,0,0.6);
+  }
 
-/* 1️⃣ 인트로 버튼은 밤모드 영향 받지 않게 */
-body.night #intro button {
-  background: #ddd;
-  color: #000;
-}
+  /* 1️⃣ 인트로 버튼은 밤모드 영향 받지 않게 */
+  body.night #intro button {
+    background: #ddd;
+    color: #000;
+  }
 
-/* 2️⃣ 밤 모드 – 메모 전송 버튼 */
-body.night .memo-input button {
-  background: #2a2f5a;
-  color: #ffffff;
-}
+  /* 2️⃣ 밤 모드 – 메모 전송 버튼 */
+  body.night .memo-input button {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
 
-body.night .memo-input button:hover {
-  background: #3a4080;
-}
+  body.night .memo-input button:hover {
+    background: #3a4080;
+  }
 
-/* ✅ 낮 모드 기본 X 버튼 */
-.profile-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  /* ✅ 낮 모드 기본 X 버튼 */
+  .profile-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
 
-  height: 28px;
-  padding: 0 14px;
-  border-radius: 999px;   /* 누운 알약 */
+    height: 28px;
+    padding: 0 14px;
+    border-radius: 999px;   /* 누운 알약 */
 
-  background: #e5e5e5;    /* ✅ 낮 모드 색 */
-  color: #333;
+    background: #e5e5e5;    /* ✅ 낮 모드 색 */
+    color: #333;
 
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-}
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+  }
 
-.profile-close-btn:hover {
-  background: #ccc;
-}
+  .profile-close-btn:hover {
+    background: #ccc;
+  }
 
-/* 🌙 밤 모드에서만 색 변경 */
-body.night .profile-close-btn {
-  background: #2a2f5a;
-  color: #ffffff;
-}
+  /* 🌙 밤 모드에서만 색 변경 */
+  body.night .profile-close-btn {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
 
-body.night .profile-close-btn:hover {
-  background: #3a4080;
-}
+  body.night .profile-close-btn:hover {
+    background: #3a4080;
+  }
 
 </style>
 </head>
@@ -448,15 +449,15 @@ body.night .profile-close-btn:hover {
   <button onclick="openProfile('a')">서올</button>
 </div>
 
-  <div class="dday" id="ddayBox"></div>
+<div class="dday" id="ddayBox"></div>
 
-  <div class="calendar">
-    <div class="calendar-header">
-      <button onclick="moveMonth(-1)">&lt;</button>
-      <strong id="monthTitle"></strong>
-      <button onclick="moveMonth(1)">&gt;</button>
-    </div>
-    <div class="days" id="calendar"></div>
+<div class="calendar">
+  <div class="calendar-header">
+    <button onclick="moveMonth(-1)">&lt;</button>
+    <strong id="monthTitle"></strong>
+    <button onclick="moveMonth(1)">&gt;</button>
+  </div>
+  <div class="days" id="calendar"></div>
   </div>
 
   <h3>Anniversary</h3>

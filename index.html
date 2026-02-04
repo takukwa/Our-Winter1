@@ -392,6 +392,37 @@ body.night .profile-modal {
   background: rgba(0,0,0,0.6);
 }
 
+/* 1️⃣ 인트로 버튼은 밤모드 영향 받지 않게 */
+body.night #intro button {
+  background: #ddd;
+  color: #000;
+}
+
+/* 2️⃣ 밤 모드 – 메모 전송 버튼 */
+body.night .memo-input button {
+  background: #2a2f5a;
+  color: #ffffff;
+}
+
+body.night .memo-input button:hover {
+  background: #3a4080;
+}
+
+/* 3️⃣ 밤 모드 – 프로필 닫기(X) 버튼 (화살표 버튼과 동일 톤) */
+body.night .close-btn {
+  color: #ffffff;
+  background: #2a2f5a;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+}
+
+body.night .close-btn:hover {
+  background: #3a4080;
+}
+
 </style>
 </head>
 

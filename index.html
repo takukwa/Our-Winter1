@@ -398,7 +398,109 @@
     opacity: 0.6;
     margin-top: 4px;
   }
-  
+
+  /* ===== 채팅 전체 ===== */
+#chat {
+  margin-top: 20px;
+  background: #f4f4f6;
+  border-radius: 18px;
+  padding: 10px;
+}
+
+/* 메시지 리스트 */
+#messages {
+  height: 360px;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 공통 메시지 블록 */
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+/* 이름 */
+.message .name {
+  font-size: 11px;
+  margin-bottom: 4px;
+  opacity: 0.6;
+}
+
+/* 말풍선 */
+.bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 시간 */
+.time {
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
+/* 서올 (왼쪽) */
+.left {
+  align-self: flex-start;
+}
+
+.left .bubble {
+  background: #e8f0ff;
+  border-bottom-left-radius: 4px;
+}
+
+/* 현우 (오른쪽) */
+.right {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.right .bubble {
+  background: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+/* 입력 영역 */
+.chat-input {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chat-input select,
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  font-size: 14px;
+}
+
+.chat-input button {
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: none;
+}
+
+  body.night .left .bubble {
+  background: #2a2f5a;
+  color: #fff;
+}
+
+body.night .right .bubble {
+  background: #3a4080;
+  color: #fff;
+}
+
+
 </style>
 </head>
 
@@ -454,18 +556,20 @@
 <div id="chat">
   <div id="messages"></div>
 
-  <select id="sender">
-    <option value="서올">서올</option>
-    <option value="현우">현우</option>
-  </select>
+  <div class="chat-input">
+    <select id="sender">
+      <option value="서올">서올</option>
+      <option value="현우">현우</option>
+    </select>
 
- <input
-  id="messageInput"
-  placeholder="메시지를 입력해줘…"
-  onkeydown="if(event.key==='Enter') sendMessage()"
-/>
+    <input
+      id="messageInput"
+      placeholder="메시지를 입력해줘…"
+      onkeydown="if(event.key==='Enter') sendMessage()"
+    />
 
-  <button onclick="sendMessage()">보내기</button>
+    <button onclick="sendMessage()">보내기</button>
+  </div>
 </div>
 
 </div>
@@ -728,16 +832,20 @@ snapshot.forEach((child) => {
       const min = date.getMinutes().toString().padStart(2, "0");
 
       const msg = document.createElement("div");
-      msg.innerHTML = `
-      <strong>${user}</strong><br>
-      ${text}<br>
-      <small>
-        ${month}월 ${day}일 ${hour}:${min}
-        ${read ? " ●" : " ○"}
-      </small>
-      <br>
-      <button onclick="deleteMessage('${key}')">삭제</button>
-    `;
+
+const side = user === "서올" ? "left" : "right";
+msg.className = `message ${side}`;
+
+msg.innerHTML = `
+  <div class="name">${user}</div>
+  <div class="bubble">${text}</div>
+  <div class="time">
+    ${month}월 ${day}일 ${hour}:${min}
+    ${read ? " ●" : " ○"}
+  </div>
+`;
+
+messagesDiv.appendChild(msg);
 
       msg.style.marginBottom = "12px";
       messagesDiv.appendChild(msg);

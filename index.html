@@ -500,15 +500,7 @@
   <ul id="annivList"></ul>
 
   <div id="detail" class="hidden"></div>
-  <h3>Memo 💬</h3>
 
-<div id="memoBox">
-  <div id="memoList"></div>
-  <div class="memo-input">
-    <input type="text" id="memoInput" placeholder="할 일은 여기 써두자." />
-    <button onclick="addMemo()">전송</button>
-  </div>
-</div>
 
 <div id="profileModal" class="hidden profile-modal">
       <div class="profile-box">
@@ -654,49 +646,6 @@
       <p>📸 사진 업로드 예정</p>
     `;
   }
-  /* ===== 메모 (채팅형) ===== */
-const memoListEl = document.getElementById("memoList");
-const memoInput = document.getElementById("memoInput");
-
-let memos = JSON.parse(localStorage.getItem("memos") || "[]");
-
-function renderMemos() {
-  memoListEl.innerHTML = "";
-  memos.forEach((m, index) => {
-    memoListEl.innerHTML += `
-      <div class="memo">
-        <span class="memo-delete" onclick="deleteMemo(${index})">🗑</span>
-        <div>${m.text}</div>
-        <div class="memo-time">${m.time}</div>
-      </div>
-    `;
-  });
-  memoListEl.scrollTop = memoListEl.scrollHeight;
-}
-
-function addMemo() {
-  const text = memoInput.value.trim();
-  if (!text) return;
-
-  const time = new Date().toLocaleString();
-  memos.push({ text, time });
-  localStorage.setItem("memos", JSON.stringify(memos));
-
-  memoInput.value = "";
-  renderMemos();
-}
-
-function deleteMemo(index) {
-  memos.splice(index, 1);
-  localStorage.setItem("memos", JSON.stringify(memos));
-  renderMemos();
-}
-
-memoInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") addMemo();
-});
-
-renderMemos();
 
 /* ===== 눈 효과 ===== */
 const canvas = document.getElementById("snow");
@@ -826,9 +775,9 @@ const db = firebase.database();
   db.ref("messages").on("value", (snapshot) => {
     messagesDiv.innerHTML = "";
 
-    snapshot.forEach((child) => {
-      const { user, text, time, read } = child.val();
-      const key = child.key;
+snapshot.forEach((child) => {
+  const key = child.key;   // ⭐ 메시지 ID
+  const { user, text, time } = child.val();
 
       const date = new Date(time);
       const month = date.getMonth() + 1;
@@ -844,8 +793,9 @@ const db = firebase.database();
         ${month}월 ${day}일 ${hour}:${min}
         ${read ? " ●" : " ○"}
       </small>
+      <br>
+      <button onclick="deleteMessage('${key}')">삭제</button>
     `;
-
 
       msg.style.marginBottom = "12px";
       messagesDiv.appendChild(msg);
@@ -856,6 +806,19 @@ const db = firebase.database();
     });
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
+
+  function deleteMessage(key) {
+  const ok = confirm("이 메시지를 삭제할까?");
+  if (!ok) return;
+
+  db.ref("messages/" + key).remove();
+}
+
+  const currentUser = document.getElementById("userSelect").value;
+
+if (user === currentUser) {
+  msg.innerHTML += `<br><button onclick="deleteMessage('${key}')">삭제</button>`;
+}
   
 </script>
 

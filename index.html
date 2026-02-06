@@ -853,44 +853,38 @@ snapshot.forEach((child) => {
   const key = child.key;
   const { user, text, time, read } = child.val();
 
-      const date = new Date(time);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hour = date.getHours().toString().padStart(2, "0");
-      const min = date.getMinutes().toString().padStart(2, "0");
+  const date = new Date(time);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours().toString().padStart(2, "0");
+  const min = date.getMinutes().toString().padStart(2, "0");
 
-      const msg = document.createElement("div");
+  const msg = document.createElement("div");
+  const side = user === "서올" ? "left" : "right";
+  msg.className = `message ${side}`;
 
-const side = user === "서올" ? "left" : "right";
-msg.className = `message ${side}`;
+  msg.innerHTML = `
+    <div class="name">${user}</div>
+    <div class="bubble">${text}</div>
+    <div class="time">${month}월 ${day}일 ${hour}:${min}</div>
+  `;
 
-msg.innerHTML = `
-  <div class="name">${user}</div>
-  <div class="bubble">${text}</div>
-  <div class="time">
-    ${month}월 ${day}일 ${hour}:${min}
-    ${read ? " ●" : " ○"}
-  </div>
-`;
+  /* 💡 말풍선 클릭 → 삭제 */
+  msg.querySelector(".bubble").onclick = () => {
+    const ok = confirm("이 메시지를 삭제할까?");
+    if (ok) {
+      db.ref("messages/" + key).remove();
+    }
+  };
 
-messagesDiv.appendChild(msg);
+  messagesDiv.appendChild(msg);
 
-      msg.style.marginBottom = "12px";
-      messagesDiv.appendChild(msg);
-      if (!read) {
-        db.ref("messages/" + key + "/read").set(true);
-      }
-
-    });
+  if (!read) {
+    db.ref("messages/" + key + "/read").set(true);
+  }
+});
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
-
-  function deleteMessage(key) {
-  const ok = confirm("이 메시지를 삭제할까?");
-  if (!ok) return;
-
-  db.ref("messages/" + key).remove();
-}
   
 </script>
 

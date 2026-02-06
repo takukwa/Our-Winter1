@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -481,6 +486,18 @@
       </div>
     </div>
 
+<div id="chat">
+  <div id="messages"></div>
+
+  <select id="sender">
+    <option value="서올">서올</option>
+    <option value="현우">현우</option>
+  </select>
+
+  <input id="messageInput" placeholder="메시지를 입력해줘…" />
+  <button onclick="sendMessage()">보내기</button>
+</div>
+
 </div>
 
 <script>
@@ -741,6 +758,57 @@ function openProfile(who) {
 function closeProfile() {
   document.getElementById("profileModal").classList.add("hidden");
 }
+ 
+const firebaseConfig = {
+    apiKey: "아무거나",
+    authDomain: "our-winter-chat.firebaseapp.com",
+    databaseURL: "https://our-winter-chat-default-rtdb.firebaseio.com",
+    projectId: "our-winter-chat",
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+  function sendMessage() {
+    const text = document.getElementById("messageInput").value.trim();
+    const user = document.getElementById("sender").value;
+    if (!text) return;
+
+    const now = Date.now();
+
+    db.ref("messages").push({
+      user: user,
+      text: text,
+      time: now
+    });
+
+    document.getElementById("messageInput").value = "";
+  }
+
+    const messagesDiv = document.getElementById("messages");
+
+  db.ref("messages").on("value", (snapshot) => {
+    messagesDiv.innerHTML = "";
+
+    snapshot.forEach((child) => {
+      const { user, text, time } = child.val();
+
+      const date = new Date(time);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours().toString().padStart(2, "0");
+      const min = date.getMinutes().toString().padStart(2, "0");
+
+      const msg = document.createElement("div");
+      msg.innerHTML = `
+        <strong>${user}</strong><br>
+        ${text}<br>
+        <small>${month}월 ${day}일 ${hour}:${min}</small>
+      `;
+
+      msg.style.marginBottom = "12px";
+      messagesDiv.appendChild(msg);
+    });
+  });
   
 </script>
 

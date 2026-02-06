@@ -590,31 +590,7 @@
       `;
     }
   }
-
-  /* ===== 상세 ===== */
-  function showDetail(title, date) {
-    const box = document.getElementById("detail");
-    box.classList.remove("hidden");
-    box.innerHTML = `
-      <h4>${title}</h4>
-      <p>${date}</p>
-      <p>📸 사진 업로드 예정     if (cellDate.getDate() === startDate.getDate() &&
-          cellDate.getMonth() === startDate.getMonth() &&
-          cellDate.getFullYear() > startDate.getFullYear()) {
-        const yearDiff = cellDate.getFullYear() - startDate.getFullYear();
-        label = `💍 ${yearDiff}주년`;
-        icon = "💍";
-        list.innerHTML += `<li onclick="showDetail('${yearDiff}주년','${cellDate.toLocaleDateString()}')">💍 ${yearDiff}주년</li>`;
-      }
-
-      cal.innerHTML += `
-        <div class="day ${label ? "mark" : ""}" data-text="${label}">
-          ${d}
-          <span>${icon}</span>
-        </div>
-      `;
-    }
-  }
+}
 
   /* ===== 상세 ===== */
   function showDetail(title, date) {

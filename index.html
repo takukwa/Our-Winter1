@@ -776,8 +776,8 @@ const db = firebase.database();
     messagesDiv.innerHTML = "";
 
 snapshot.forEach((child) => {
-  const key = child.key;   // ⭐ 메시지 ID
-  const { user, text, time } = child.val();
+  const key = child.key;
+  const { user, text, time, read } = child.val();
 
       const date = new Date(time);
       const month = date.getMonth() + 1;
@@ -812,12 +812,6 @@ snapshot.forEach((child) => {
   if (!ok) return;
 
   db.ref("messages/" + key).remove();
-}
-
-  const currentUser = document.getElementById("userSelect").value;
-
-if (user === currentUser) {
-  msg.innerHTML += `<br><button onclick="deleteMessage('${key}')">삭제</button>`;
 }
   
 </script>

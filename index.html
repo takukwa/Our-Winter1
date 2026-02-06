@@ -426,6 +426,37 @@
     background: #3a4080;
   }
 
+    #messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .seo {
+    align-self: flex-start;
+    background: #e8f0ff;
+  }
+
+  .hyun {
+    align-self: flex-end;
+    background: #eee;
+    text-align: right;
+  }
+
+  .time {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+  
 </style>
 </head>
 
@@ -494,7 +525,12 @@
     <option value="현우">현우</option>
   </select>
 
-  <input id="messageInput" placeholder="메시지를 입력해줘…" />
+ <input
+  id="messageInput"
+  placeholder="메시지를 입력해줘…"
+  onkeydown="if(event.key==='Enter') sendMessage()"
+/>
+
   <button onclick="sendMessage()">보내기</button>
 </div>
 
@@ -779,6 +815,7 @@ const db = firebase.database();
       user: user,
       text: text,
       time: now
+      read: false
     });
 
     document.getElementById("messageInput").value = "";
@@ -790,7 +827,8 @@ const db = firebase.database();
     messagesDiv.innerHTML = "";
 
     snapshot.forEach((child) => {
-      const { user, text, time } = child.val();
+      const { user, text, time, read } = child.val();
+      const key = child.key;
 
       const date = new Date(time);
       const month = date.getMonth() + 1;
@@ -800,14 +838,23 @@ const db = firebase.database();
 
       const msg = document.createElement("div");
       msg.innerHTML = `
-        <strong>${user}</strong><br>
-        ${text}<br>
-        <small>${month}월 ${day}일 ${hour}:${min}</small>
-      `;
+      <strong>${user}</strong><br>
+      ${text}<br>
+      <small>
+        ${month}월 ${day}일 ${hour}:${min}
+        ${read ? " ●" : " ○"}
+      </small>
+    `;
+
 
       msg.style.marginBottom = "12px";
       messagesDiv.appendChild(msg);
+      if (!read) {
+        db.ref("messages/" + key + "/read").set(true);
+      }
+
     });
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
   
 </script>

@@ -402,11 +402,20 @@
 /* ===== 채팅 전체 ===== */
 #chat {
   margin-top: 24px;
-  background: #ffffff;          /* 🔹 흰 배경 */
+
+  /* ⬅️ 왼쪽 배치 */
+  margin-left: 0;
+  margin-right: auto;
+
+  width: 380px;              /* PC에서 카드 폭 */
+  max-width: 100%;
+
+  background: #ffffff;
   border-radius: 18px;
   padding: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 🔹 경계감 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
+
 
 /* 메시지 리스트 */
 #messages {
@@ -526,6 +535,16 @@ body.night .chat-input button {
 
 body.night .chat-input button:hover {
   background: #3a4080;
+}
+
+/* 📱 모바일 대응 */
+@media (max-width: 768px) {
+  #chat {
+    margin-left: auto;
+    margin-right: auto;   /* ⭕ 가운데 */
+    width: 94%;           /* 화면 거의 꽉 */
+    border-radius: 22px;
+  }
 }
 
 

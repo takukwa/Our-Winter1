@@ -552,8 +552,8 @@
 
       // 사귄 날
       if (cellDate.getTime() === startDate.getTime()) {
-        label = "❤️ 사귄 날 (1일)";
-        icon = "❤️";
+        label = "🩵 눈이 내리기 시작한 ";
+        icon = "🩵";
       }
 
       // 생일
@@ -598,7 +598,32 @@
     box.innerHTML = `
       <h4>${title}</h4>
       <p>${date}</p>
-      <p>📸 여기에 사진을 넣을 수 있어요</p>
+      <p>📸 사진 업로드 예정     if (cellDate.getDate() === startDate.getDate() &&
+          cellDate.getMonth() === startDate.getMonth() &&
+          cellDate.getFullYear() > startDate.getFullYear()) {
+        const yearDiff = cellDate.getFullYear() - startDate.getFullYear();
+        label = `💍 ${yearDiff}주년`;
+        icon = "💍";
+        list.innerHTML += `<li onclick="showDetail('${yearDiff}주년','${cellDate.toLocaleDateString()}')">💍 ${yearDiff}주년</li>`;
+      }
+
+      cal.innerHTML += `
+        <div class="day ${label ? "mark" : ""}" data-text="${label}">
+          ${d}
+          <span>${icon}</span>
+        </div>
+      `;
+    }
+  }
+
+  /* ===== 상세 ===== */
+  function showDetail(title, date) {
+    const box = document.getElementById("detail");
+    box.classList.remove("hidden");
+    box.innerHTML = `
+      <h4>${title}</h4>
+      <p>${date}</p>
+      <p>📸 사진 업로드 예정</p>
     `;
   }
   /* ===== 메모 (채팅형) ===== */
@@ -725,13 +750,13 @@ function openProfile(who) {
     content.innerHTML = `
       <div class="profile-img"></div>
       <h3>서올</h3>
-      <p>❄️ 겨울을 좋아하는 사람</p>
+      <p>세계의 종말, 네 앞에서<br>#네가부디_나를</p>
     `;
   } else {
     content.innerHTML = `
       <div class="profile-img"></div>
       <h3>현우</h3>
-      <p>☕ 따뜻한 커피를 좋아해</p>
+      <p>세계의 종말, 그 앞에서<br>#내가감히_너를</p>
     `;
   }
 

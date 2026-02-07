@@ -414,6 +414,12 @@
   border-radius: 18px;
   padding: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  position: fixed;
+  left: 20px;
+  top: 80px;
+  width: 360px;
+  max-height: calc(100vh - 120px);
 }
 
 
@@ -540,13 +546,13 @@ body.night .chat-input button:hover {
 /* 📱 모바일 대응 */
 @media (max-width: 768px) {
   #chat {
-    margin-left: auto;
-    margin-right: auto;   /* ⭕ 가운데 */
-    width: 94%;           /* 화면 거의 꽉 */
-    border-radius: 22px;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 94%;
+    margin: 24px auto 0;
   }
 }
-
 
 </style>
 </head>

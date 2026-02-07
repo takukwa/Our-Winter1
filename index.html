@@ -52,21 +52,21 @@
   }
 
   button {
-  padding: 10px 26px;
-  border-radius: 20px;
-  border: none;
-  background: #e5e5e5;   /* 기존 #ddd 보다 밝게 */
-  cursor: pointer;
-  font-size: 15px;
+    padding: 10px 26px;
+    border-radius: 20px;
+    border: none;
+    background: #e5e5e5;   /* 기존 #ddd 보다 밝게 */
+    cursor: pointer;
+    font-size: 15px;
   }
 
   button:hover { background: #bbb; }
 
   /* ===== 홈 ===== */
   #home {
-  padding: 16px;
-  max-width: 420px;
-  margin: 0 auto;
+    padding: 16px;
+    max-width: 420px;
+    margin: 0 auto;
   }
 
   .dday {
@@ -368,7 +368,7 @@
     background: #3a4080;
   }
 
-    #messages {
+  #messages {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -415,11 +415,10 @@
     padding: 14px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-    position: relative;   /* 또는 그냥 이 줄 자체 삭제 */
-    top: auto;
-    left: auto;
-    width: 360px;
-    max-height: calc(100vh - 120px);
+    width: 100%;
+    max-height: 520px;
+    display: flex;
+    flex-direction: column;
   }
 
   /* 메시지 리스트 */
@@ -549,11 +548,7 @@
     }
   
     #chat {
-      position: relative;
-      left: auto;
-      top: auto;
-      width: 94%;
-      margin: 24px auto 0;
+      max-height: 420px;
     }
   }
 
@@ -567,6 +562,13 @@
     margin: 0 auto;
     padding: 24px;
   }
+
+  #content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
 
 </style>
 </head>
@@ -606,41 +608,42 @@
     </div>
   </div>
 
-  <!-- ===== 홈 ===== -->
-  <div id="home" class="hidden">
-    <h2>Our Winter ❄️</h2>
+  <div id="content">
+    <!-- ===== 홈 ===== -->
+    <div id="home" class="hidden">
+      <h2>Our Winter ❄️</h2>
 
-    <button id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <button id="themeBtn" onclick="toggleTheme()">🌙</button>
 
-    <div class="button-row">
-      <button onclick="openProfile('b')">현우</button>
-      <span style="font-size:18px;">🩵</span>
-      <button onclick="openProfile('a')">서올</button>
+      <div class="button-row">
+        <button onclick="openProfile('b')">현우</button>
+        <span style="font-size:18px;">🩵</span>
+        <button onclick="openProfile('a')">서올</button>
+      </div>
     </div>
-  </div>
   
-  <div class="dday" id="ddayBox"></div>
+    <div class="dday" id="ddayBox"></div>
   
-  <div class="calendar">
-    <div class="calendar-header">
-      <button onclick="moveMonth(-1)">&lt;</button>
-      <strong id="monthTitle"></strong>
-      <button onclick="moveMonth(1)">&gt;</button>
+    <div class="calendar">
+      <div class="calendar-header">
+        <button onclick="moveMonth(-1)">&lt;</button>
+        <strong id="monthTitle"></strong>
+        <button onclick="moveMonth(1)">&gt;</button>
+      </div>
+      <div class="days" id="calendar"></div>
     </div>
-    <div class="days" id="calendar"></div>
-  </div>
 
-  <h3>Anniversary</h3>
-  <ul id="annivList"></ul>
+    <h3>Anniversary</h3>
+    <ul id="annivList"></ul>
 
-  <div id="detail" class="hidden"></div>
-  <div id="profileModal" class="hidden profile-modal">
-    <div class="profile-box">
-      <button class="profile-close-btn" onclick="closeProfile()">✕</button>
-      <div id="profileContent"></div>
+    <div id="detail" class="hidden"></div>
+    <div id="profileModal" class="hidden profile-modal">
+      <div class="profile-box">
+        <button class="profile-close-btn" onclick="closeProfile()">✕</button>
+        <div id="profileContent"></div>
+      </div>
     </div>
   </div>
-
 </div>
 
 <script>

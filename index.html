@@ -415,9 +415,9 @@
   padding: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-  position: fixed;
-  left: 20px;
-  top: 80px;
+  position: relative;   /* 또는 그냥 이 줄 자체 삭제 */
+  top: auto;
+  left: auto;
   width: 360px;
   max-height: calc(100vh - 120px);
 }
@@ -545,6 +545,10 @@ body.night .chat-input button:hover {
 
 /* 📱 모바일 대응 */
 @media (max-width: 768px) {
+  #main-layout {
+    grid-template-columns: 1fr; /* 한 줄 */
+  }
+  
   #chat {
     position: relative;
     left: auto;
@@ -553,6 +557,18 @@ body.night .chat-input button:hover {
     margin: 24px auto 0;
   }
 }
+
+/* ===== 메인 레이아웃 ===== */
+#main-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
 
 </style>
 </head>
@@ -570,16 +586,40 @@ body.night .chat-input button:hover {
   <p id="noText" class="hidden">눈은 결국 녹아버려.</p>
 </div>
 
-<!-- ===== 홈 ===== -->
-<div id="home" class="hidden">
-  <h2>Our Winter ❄️</h2>
+<!-- ===== 메인 레이아웃 ===== -->
+<div id="main-layout">
 
-  <button id="themeBtn" onclick="toggleTheme()">🌙</button>
+  <div id="chat">
+    <div id="messages"></div>
+    
+    <div class="chat-input">
+      <select id="sender">
+        <option value="서올">서올</option>
+        <option value="현우">현우</option>
+      </select>
+      
+      <input
+        id="messageInput"
+        placeholder="메시지를 입력해줘…"
+        onkeydown="if(event.key==='Enter') sendMessage()"
+      />
+      
+      <button onclick="sendMessage()">보내기</button>
+    </div>
+  </div>
 
-  <div class="button-row">
-  <button onclick="openProfile('b')">현우</button>
-  <span style="font-size:18px;">🩵</span>
-  <button onclick="openProfile('a')">서올</button>
+  <!-- ===== 홈 ===== -->
+  <div id="home" class="hidden">
+    <h2>Our Winter ❄️</h2>
+
+    <button id="themeBtn" onclick="toggleTheme()">🌙</button>
+
+    <div class="button-row">
+      <button onclick="openProfile('b')">현우</button>
+      <span style="font-size:18px;">🩵</span>
+      <button onclick="openProfile('a')">서올</button>
+    </div>
+  </div>
 </div>
 
 <div class="dday" id="ddayBox"></div>
@@ -605,25 +645,6 @@ body.night .chat-input button:hover {
         <div id="profileContent"></div>
       </div>
     </div>
-
-<div id="chat">
-  <div id="messages"></div>
-
-  <div class="chat-input">
-    <select id="sender">
-      <option value="서올">서올</option>
-      <option value="현우">현우</option>
-    </select>
-
-    <input
-      id="messageInput"
-      placeholder="메시지를 입력해줘…"
-      onkeydown="if(event.key==='Enter') sendMessage()"
-    />
-
-    <button onclick="sendMessage()">보내기</button>
-  </div>
-</div>
 
 </div>
 

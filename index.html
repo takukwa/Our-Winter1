@@ -544,29 +544,45 @@
   /* 📱 모바일 대응 */
   @media (max-width: 768px) {
     #main-layout {
-      grid-template-columns: 1fr; /* 한 줄 */
+      grid-template-columns: 1fr;
     }
-  
+
     #chat {
-      max-height: 420px;
+      order: 2;     /* 아래로 */
+    }
+
+    #content {
+      order: 1;     /* 위로 */
     }
   }
 
   /* ===== 메인 레이아웃 ===== */
   #main-layout {
     display: grid;
-    grid-template-columns: 360px 1fr;
+    grid-template-columns: 360px 1fr; /* 채팅 | 오른쪽 */
     gap: 24px;
 
     max-width: 1200px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 16px 24px 40px;
   }
 
   #content {
     display: flex;
     flex-direction: column;
     gap: 18px;
+  }
+
+  #top-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
   }
 
 
@@ -586,6 +602,19 @@
   <p id="noText" class="hidden">눈은 결국 녹아버려.</p>
 </div>
 
+<!-- ===== 상단 영역 ===== -->
+<div id="top-area" class="hidden">
+  <h2>Our Winter ❄️</h2>
+
+  <div class="button-row">
+    <button onclick="openProfile('b')">현우</button>
+    <span style="font-size:18px;">🩵</span>
+    <button onclick="openProfile('a')">서올</button>
+  </div>
+
+  <div class="dday" id="ddayBox"></div>
+</div>
+  
 <!-- ===== 메인 레이아웃 ===== -->
 <div id="main-layout">
 
@@ -611,18 +640,8 @@
   <div id="content">
     <!-- ===== 홈 ===== -->
     <div id="home" class="hidden">
-      <h2>Our Winter ❄️</h2>
-
       <button id="themeBtn" onclick="toggleTheme()">🌙</button>
-
-      <div class="button-row">
-        <button onclick="openProfile('b')">현우</button>
-        <span style="font-size:18px;">🩵</span>
-        <button onclick="openProfile('a')">서올</button>
-      </div>
     </div>
-  
-    <div class="dday" id="ddayBox"></div>
   
     <div class="calendar">
       <div class="calendar-header">
@@ -658,13 +677,14 @@
 
   /* ===== 인트로 ===== */
   function enterHome() {
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("home").classList.remove("hidden");
-  document.getElementById("themeBtn").style.display = "block";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("top-area").classList.remove("hidden");
+    document.getElementById("main-layout").classList.remove("hidden");
+    document.getElementById("themeBtn").style.display = "block";
 
-  updateDday();
-  renderCalendar();
-}
+    updateDday();
+    renderCalendar();
+  }
 
   function showNo() {
     document.getElementById("noText").classList.remove("hidden");

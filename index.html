@@ -96,11 +96,11 @@
   }
 
   .day {
-  padding: 10px 0;
-  border-radius: 6px;
-  position: relative;
-  cursor: default;
-  font-size: 14px;
+    padding: 10px 0;
+    border-radius: 6px;
+    position: relative;
+    cursor: default;
+    font-size: 14px;
   }
 
   .mark {
@@ -204,6 +204,16 @@
     border: none;
     cursor: pointer;
     z-index: 30;
+  }
+
+  /* 🌙 홈 진입 + 밤 모드일 때만 */
+  body.entered.night #themeBtn {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
+
+  body.entered.night #themeBtn:hover {
+    background: #3a4080;
   }
   
   /* 🌙 밤 모드 캘린더 기념일 가독성 개선 */
@@ -609,6 +619,20 @@
     box-sizing: border-box;
   }
 
+  /* ✅ 인트로 화면에서는 테마 버튼 색 고정 */
+  #intro ~ #themeBtn,
+  #intro + #themeBtn,
+  #themeBtn {
+    background: #e5e5e5;
+    color: #333;
+  }
+
+  /* 🌙 홈 진입 후에만 밤 모드 버튼 적용 */
+  body.night:not(:has(#intro:not(.hidden))) #themeBtn {
+    background: #2a2f5a;
+    color: #ffffff;
+  }
+
   
 </style>
 </head>
@@ -706,10 +730,9 @@
   /* ===== 인트로 ===== */
   function enterHome() {
     document.getElementById("intro").style.display = "none";
-
+    document.body.classList.add("entered");
     document.getElementById("top-area").classList.remove("hidden");
     document.getElementById("main-layout").classList.remove("hidden");
-
     document.getElementById("themeBtn").style.display = "block";
 
     // ⭐ 순서 중요

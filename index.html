@@ -206,6 +206,15 @@
     z-index: 30;
   }
 
+  body.night #themeBtn {
+    background: #2a2f5a; /* 밤 모드 색 */
+    color: #ffffff;
+  }
+
+  body.entered.night #themeBtn:hover {
+    background: #3a4080;
+  }
+
   /* 🌙 홈 진입 + 밤 모드일 때만 */
   body.entered.night #themeBtn {
     background: #2a2f5a;
@@ -617,14 +626,6 @@
     border-radius: 16px;
     padding: 16px;
     box-sizing: border-box;
-  }
-
-  /* ✅ 인트로 화면에서는 테마 버튼 색 고정 */
-  #intro ~ #themeBtn,
-  #intro + #themeBtn,
-  #themeBtn {
-    background: #e5e5e5;
-    color: #333;
   }
 
   /* 🌙 홈 진입 후에만 밤 모드 버튼 적용 */

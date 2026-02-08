@@ -563,18 +563,12 @@
   /* ===== 메인 레이아웃 ===== */
   #main-layout {
     display: grid;
-    grid-template-columns: 360px 420px; /* 둘 다 고정 */
-    gap: 40px; /* ← 거리 여기서 조절 */
+    grid-template-columns: 380px 1fr; /* 왼쪽: 채팅 / 오른쪽: 캘린더 */
+    gap: 40px;
 
     max-width: 1200px;
     margin: 0 auto;
-    padding: 16px 24px 40px;
-  }
-
-  #content {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    padding: 24px;
   }
 
   #top-area {
@@ -589,19 +583,19 @@
     text-align: center;
   }
 
+  /* ===== 오른쪽 묶음 (캘린더 + 애니벌서리) ===== */
   #right-panel {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: column;   /* 위 → 아래 */
+    gap: 18px;                /* 카드 사이 간격 */
   }
 
-  .dday-card,
+  /* 카드 공통 스타일 */
   .calendar-card,
   .anniversary-card {
-    width: 100%;              /* ⭐ 가로 폭 통일 핵심 */
     background: #ffffff;
     border-radius: 16px;
-    padding: 20px;
+    padding: 16px;
     box-sizing: border-box;
   }
 
@@ -657,35 +651,27 @@
     </div>
   </div>
 
+  <!-- ===== 오른쪽 영역 ===== -->
   <div id="right-panel">
 
-    <div id="content">
-      <!-- ===== 홈 ===== -->
-      <div id="home" class="hidden">
-        <button id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <!-- 📅 캘린더 카드 -->
+    <div class="calendar-card">
+      <div class="calendar-header">
+        <button onclick="moveMonth(-1)">&lt;</button>
+        <strong id="monthTitle"></strong>
+        <button onclick="moveMonth(1)">&gt;</button>
       </div>
-  
-      <div class="calendar">
-        <div class="calendar-header">
-          <button onclick="moveMonth(-1)">&lt;</button>
-          <strong id="monthTitle"></strong>
-          <button onclick="moveMonth(1)">&gt;</button>
-        </div>
-        <div class="days" id="calendar"></div>
-      </div>
+      <div class="days" id="calendar"></div>
+    </div>
 
+    <!-- 💍 Anniversary 카드 -->
+    <div class="anniversary-card">
       <h3>Anniversary</h3>
       <ul id="annivList"></ul>
-
       <div id="detail" class="hidden"></div>
-      <div id="profileModal" class="hidden profile-modal">
-        <div class="profile-box">
-          <button class="profile-close-btn" onclick="closeProfile()">✕</button>
-          <div id="profileContent"></div>
-        </div>
-      </div>
     </div>
   </div>
+
 </div>
 
 <script>

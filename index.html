@@ -80,13 +80,7 @@
   }
 
   /* ===== 캘린더 ===== */
-  .calendar {
-    background: #fff;
-    border-radius: 18px;
-    padding: 14px;
-  }
-
-  .calendar-header {
+ .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -626,6 +620,8 @@
   <div class="dday" id="ddayBox"></div>
 </div>
 
+<button id="themeBtn" onclick="toggleTheme()">🌙</button>
+
 <!-- ===== 메인 레이아웃 ===== -->
 <div id="main-layout" class="hidden">
 
@@ -666,6 +662,13 @@
       <h3>Anniversary</h3>
       <ul id="annivList"></ul>
       <div id="detail" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">
+    <div class="profile-box" onclick="event.stopPropagation()">
+      <button class="profile-close-btn" onclick="closeProfile()">X</button>
+      <div id="profileContent"></div>
     </div>
   </div>
 

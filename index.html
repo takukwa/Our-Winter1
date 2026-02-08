@@ -633,7 +633,6 @@
   <div class="dday" id="ddayBox"></div>
 </div>
 
-  
 <!-- ===== 메인 레이아웃 ===== -->
 <div id="main-layout">
 
@@ -807,111 +806,112 @@
     `;
   }
 
-/* ===== 눈 효과 ===== */
-const canvas = document.getElementById("snow");
-const ctx = canvas.getContext("2d");
+  /* ===== 눈 효과 ===== */
+  const canvas = document.getElementById("snow");
+  const ctx = canvas.getContext("2d");
 
-let w, h;
-let snowflakes = [];
-let snowCount = 80;      // 기본 눈 개수
-let snowSpeed = 1;      // 기본 속도
+  let w, h;
+  let snowflakes = [];
+  let snowCount = 80;      // 기본 눈 개수
+  let snowSpeed = 1;      // 기본 속도
 
-function resizeSnow() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeSnow);
-resizeSnow();
+  function resizeSnow() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeSnow);
+  resizeSnow();
 
-function createSnow() {
-  snowflakes = [];
-  for (let i = 0; i < snowCount; i++) {
-    snowflakes.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: Math.random() * 3 + 1,
-      d: Math.random() + 1
+  function createSnow() {
+    snowflakes = [];
+    for (let i = 0; i < snowCount; i++) {
+      snowflakes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 3 + 1,
+        d: Math.random() + 1
+      });
+    }
+  }
+  createSnow();
+
+  function drawSnow() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.beginPath();
+
+    snowflakes.forEach(f => {
+      ctx.moveTo(f.x, f.y);
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+    });
+
+    ctx.fill();
+    moveSnow();
+  }
+
+  function moveSnow() {
+    snowflakes.forEach(f => {  
+      f.y += Math.pow(f.d, 2) + 0.5 * snowSpeed;
+      f.x += Math.sin(f.y * 0.01);
+
+      if (f.y > h) {
+        f.y = -10;
+        f.x = Math.random() * w;
+      }
     });
   }
-}
-createSnow();
 
-function drawSnow() {
-  ctx.clearRect(0, 0, w, h);
-  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-  ctx.beginPath();
+  setInterval(drawSnow, 33);
 
-  snowflakes.forEach(f => {
-    ctx.moveTo(f.x, f.y);
-    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-  });
-
-  ctx.fill();
-  moveSnow();
-}
-
-function moveSnow() {
-  snowflakes.forEach(f => {
-    f.y += Math.pow(f.d, 2) + 0.5 * snowSpeed;
-    f.x += Math.sin(f.y * 0.01);
-
-    if (f.y > h) {
-      f.y = -10;
-      f.x = Math.random() * w;
-    }
-  });
-}
-
-setInterval(drawSnow, 33);
-
-/* 테마 */
-function toggleTheme() {
-  document.body.classList.toggle("night");
-  const isNight = document.body.classList.contains("night");
-  localStorage.setItem("theme", isNight ? "night" : "day");
-  document.getElementById("themeBtn").textContent = isNight ? "☀️" : "🌙";
-}
-
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme === "night") {
-  document.body.classList.add("night");
-  document.getElementById("themeBtn").textContent = "☀️";
-}
-
-/* ✅ 프로필 */
-function openProfile(who) {
-  const box = document.getElementById("profileModal");
-  const content = document.getElementById("profileContent");
-
-  if (who === "a") {
-    content.innerHTML = `
-      <div class="profile-img"></div>
-      <h3>서올</h3>
-      <p>세계의 종말, 네 앞에서<br>#네가부디_나를</p>
-    `;
-  } else {
-    content.innerHTML = `
-      <div class="profile-img"></div>
-      <h3>현우</h3>
-      <p>세계의 종말, 그 앞에서<br>#내가감히_너를</p>
-    `;
+  /* 테마 */
+  function toggleTheme() {
+    document.body.classList.toggle("night");
+    const isNight = document.body.classList.contains("night");
+    localStorage.setItem("theme", isNight ? "night" : "day");
+    document.getElementById("themeBtn").textContent = isNight ? "☀️" : "🌙";
   }
 
-  box.classList.remove("hidden");
-}
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "night") {
+    document.body.classList.add("night");
+    document.getElementById("themeBtn").textContent = "☀️";
+  }
 
-function closeProfile() {
-  document.getElementById("profileModal").classList.add("hidden");
-}
+  /* ✅ 프로필 */
+  function openProfile(who) {
+    const box = document.getElementById("profileModal");
+    const content = document.getElementById("profileContent");
+    
+    if (who === "a") {
+      content.innerHTML = `
+        <div class="profile-img"></div>
+        <h3>서올</h3>
+        <p>세계의 종말, 네 앞에서<br>#네가부디_나를</p>
+      `;
+    }
+    else {
+      content.innerHTML = `
+        <div class="profile-img"></div>
+        <h3>현우</h3>
+        <p>세계의 종말, 그 앞에서<br>#내가감히_너를</p>
+      `;
+    }
+    
+    box.classList.remove("hidden");
+  }
+
+  function closeProfile() {
+    document.getElementById("profileModal").classList.add("hidden");
+  }
  
-const firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "아무거나",
     authDomain: "our-winter-chat.firebaseapp.com",
     databaseURL: "https://our-winter-chat-default-rtdb.firebaseio.com",
     projectId: "our-winter-chat",
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
   function sendMessage() {
     const text = document.getElementById("messageInput").value.trim();
@@ -930,49 +930,48 @@ const db = firebase.database();
     document.getElementById("messageInput").value = "";
   }
 
-    const messagesDiv = document.getElementById("messages");
+  const messagesDiv = document.getElementById("messages");
 
   db.ref("messages").on("value", (snapshot) => {
     messagesDiv.innerHTML = "";
 
-snapshot.forEach((child) => {
-  const key = child.key;
-  const { user, text, time, read } = child.val();
+    snapshot.forEach((child) => {
+      const key = child.key;
+      const { user, text, time, read } = child.val();
 
-  const date = new Date(time);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours().toString().padStart(2, "0");
-  const min = date.getMinutes().toString().padStart(2, "0");
+      const date = new Date(time);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours().toString().padStart(2, "0");
+      const min = date.getMinutes().toString().padStart(2, "0");
 
-  const msg = document.createElement("div");
-  const side = user === "서올" ? "left" : "right";
-  msg.className = `message ${side}`;
+      const msg = document.createElement("div");
+      const side = user === "서올" ? "left" : "right";
+      msg.className = `message ${side}`;
 
-  msg.innerHTML = `
-    <div class="name">${user}</div>
-    <div class="bubble">${text}</div>
-    <div class="time">${month}월 ${day}일 ${hour}:${min}</div>
-  `;
+      msg.innerHTML = `
+      <div class="name">${user}</div>
+      <div class="bubble">${text}</div>
+      <div class="time">${month}월 ${day}일 ${hour}:${min}</div>
+      `;
 
-  /* 💡 말풍선 클릭 → 삭제 */
-  msg.querySelector(".bubble").onclick = () => {
-    const ok = confirm("이 메시지를 삭제할까?");
-    if (ok) {
-      db.ref("messages/" + key).remove();
-    }
-  };
+      /* 💡 말풍선 클릭 → 삭제 */
+      msg.querySelector(".bubble").onclick = () => {
+        const ok = confirm("이 메시지를 삭제할까?");
+        if (ok) {
+          db.ref("messages/" + key).remove();
+        }
+      };
 
-  messagesDiv.appendChild(msg);
+      messagesDiv.appendChild(msg);
 
-  if (!read) {
-    db.ref("messages/" + key + "/read").set(true);
-  }
-});
+      if (!read) {
+        db.ref("messages/" + key + "/read").set(true);
+      }
+    });
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
   
 </script>
-
 </body>
 </html>

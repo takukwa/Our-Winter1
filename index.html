@@ -113,6 +113,25 @@
     display: block;
   }
 
+  /* 🌙 밤 모드 – 오른쪽 카드들 */
+  body.night .calendar-card,
+  body.night .anniversary-card {
+    background: #1b1f3a;
+    color: #e6e6f0;
+  }
+
+  body.night .calendar-card {
+    color: #cfd3ff;
+  }
+
+  body.night #annivList li:hover {
+    color: #ffffff;
+  }
+
+  body.night .calendar-card .days > div {
+    color: #9aa3ff;
+  }
+
   /* ===== Anniversary ===== */
   h3 {
     margin-top: 22px;

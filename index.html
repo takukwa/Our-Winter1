@@ -136,12 +136,16 @@
   }
 
   #detail {
-    margin-top: 14px;
-    background: #fff;
-    border-radius: 14px;
+    margin-top: 12px;
+    background: #f4f4f6;
+    border-radius: 12px;
     padding: 12px;
   }
-  
+
+  body.night #detail {
+    background: #2a2f5a;
+  }
+ 
   #snow {
   position: fixed;
   top: 0;
@@ -625,7 +629,7 @@
 </div>
 
 <!-- ===== 메인 레이아웃 ===== -->
-<div id="main-layout">
+<div id="main-layout" class="hidden">
 
   <div id="chat">
     <div id="messages"></div>
@@ -682,12 +686,17 @@
   /* ===== 인트로 ===== */
   function enterHome() {
     document.getElementById("intro").style.display = "none";
+
     document.getElementById("top-area").classList.remove("hidden");
     document.getElementById("main-layout").classList.remove("hidden");
+
     document.getElementById("themeBtn").style.display = "block";
 
+    // ⭐ 순서 중요
     updateDday();
-    renderCalendar();
+
+    current = new Date();   // ← 현재 달 강제 초기화
+    renderCalendar();       // ← 무조건 한 번 그리기
   }
 
   function showNo() {

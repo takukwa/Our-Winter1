@@ -16,6 +16,7 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     background: #f4f4f6;
     color: #333;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* 인트로 문장 색 고정 */
@@ -204,26 +205,6 @@
     cursor: pointer;
     z-index: 30;
   }
-
-  /* 인트로가 끝난 뒤 + 밤모드일 때 */
-  body.entered.dark #themeBtn {
-    background: #333;
-    color: #eee;
-  }
-
-  body.entered.night #themeBtn:hover {
-    background: #3a4080;
-  }
-
-  /* 🌙 홈 진입 + 밤 모드일 때만 */
-  body.entered.night #themeBtn {
-    background: #2a2f5a;
-    color: #ffffff;
-  }
-
-  body.entered.night #themeBtn:hover {
-    background: #3a4080;
-  }
   
   /* 🌙 밤 모드 캘린더 기념일 가독성 개선 */
   body.night .day.mark {
@@ -246,19 +227,10 @@
   body.night .calendar-header button:hover {
     background: #3a4080;
   }
-  
-  body.night #themeBtn {
-    background: #2a2f5a;
-    color: #ffffff;
-  }
-  
-  body.night #themeBtn:hover {
-    background: #3a4080;
-  }
-  
+
   /* ✅ 기념일(mark) 있는 날짜만 말풍선 표시 */
   .day.mark:hover::after {
-    content: attr(data-text);
+    content: attr(data-text);ㄴ
     position: absolute;
     left: 50%;
     bottom: -34px;
@@ -278,10 +250,6 @@
   
   input {
     font-size: 16px;
-  }
-  
-  body {
-    padding-bottom: env(safe-area-inset-bottom);
   }
   
   /* ===== 프로필 ===== */
@@ -583,12 +551,12 @@
     box-sizing: border-box;
   }
 
-  /* 🌙 홈 진입 후에만 밤 모드 버튼 적용 */
-  body.night:not(:has(#intro:not(.hidden))) #themeBtn {
+  /* 🌙 홈 + 밤 모드일 때만 */
+  body.night #themeBtn {
     background: #2a2f5a;
     color: #ffffff;
   }
-
+  
   /* ⭐ 인트로 화면에서는 테마 버튼 항상 낮모드 */
   #intro:not(.hidden) ~ #themeBtn {
     background: #e5e5e5;
@@ -694,7 +662,6 @@
     document.body.classList.add("entered");
     document.getElementById("top-area").classList.remove("hidden");
     document.getElementById("main-layout").classList.remove("hidden");
-    document.getElementById("themeBtn").style.display = "block";
 
     // ⭐ 순서 중요
     updateDday();

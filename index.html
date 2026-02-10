@@ -76,6 +76,9 @@
     padding: 14px;
     margin: 12px 0 18px;
     text-align: center;
+
+    width: 100%;               /* ⭐ 핵심 */
+    box-sizing: border-box;    /* ⭐ padding 포함 */
   }
 
   /* ===== 캘린더 ===== */
@@ -524,9 +527,9 @@
   }
 
   #top-area {
-    max-width: 1200px;
+    max-width: 420px;     /* ⭐ main-layout과 동일 */
     margin: 0 auto;
-    padding: 24px 16px 12px;
+    padding: 24px;
 
     display: flex;
     flex-direction: column;

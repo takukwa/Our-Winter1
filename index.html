@@ -538,9 +538,12 @@
   /* ===== 오른쪽 묶음 (캘린더 + 애니벌서리) ===== */
   #right-panel {
     display: flex;
-    flex-direction: column;   /* 위 → 아래 */
-    gap: 18px;                /* 카드 사이 간격 */
+    flex-direction: column;
+    gap: 18px;
+
+    align-items: flex-start;   /* ⭐ 카드 폭 고정 핵심 */
   }
+
 
   /* 카드 공통 스타일 */
   .calendar-card,
@@ -549,6 +552,9 @@
     border-radius: 16px;
     padding: 16px;
     box-sizing: border-box;
+
+    width: 380px;          /* ⭐ 채팅창과 동일 */
+    max-width: 100%;
   }
 
   /* 🌙 홈 + 밤 모드일 때만 */

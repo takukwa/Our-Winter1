@@ -571,12 +571,11 @@
 
 <!-- ===== 인트로 ===== -->
 <div id="intro" class="center">
-  <h1>눈은 언제까지나 내릴까?</h1>
+  <h1 id="introText">눈은 언제까지나 내릴까?</h1>
   <div class="button-row">
     <button onclick="enterHome()">Yes</button>
     <button onclick="showNo()">No</button>
   </div>
-  <p id="noText" class="hidden">눈은 결국 녹아버려.</p>
 </div>
 
 <!-- ===== 상단 영역 ===== -->
@@ -671,7 +670,15 @@
   }
 
   function showNo() {
-    document.getElementById("noText").classList.remove("hidden");
+    const text = document.getElementById("introText");
+
+    // 1️⃣ 문장 바꾸기
+    text.textContent = "눈은 결국 녹아버려.";
+
+    // 2️⃣ 3초 후 다시 원래 문장으로
+    setTimeout(() => {
+      text.textContent = "눈은 언제까지나 내릴까?";
+    }, 3000);
   }
 
   /* ===== D-Day ===== */

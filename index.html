@@ -563,6 +563,17 @@
     color: #333;
   }
 
+  /* 🔹 채팅 스크롤바 숨기기 (스크롤은 유지) */
+  #messages {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE, Edge */
+  }
+
+  #messages::-webkit-scrollbar {
+    display: none;                /* Chrome, Safari */
+  }
+
+
 </style>
 </head>
 

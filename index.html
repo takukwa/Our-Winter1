@@ -516,11 +516,11 @@
 
   /* ===== 메인 레이아웃 ===== */
   #main-layout {
-    display: grid;
-    grid-template-columns: 380px 1fr; /* 왼쪽: 채팅 / 오른쪽: 캘린더 */
-    gap: 40px;
+    display: flex;
+    flex-direction: column;   /* ⭐ 세로로 쌓기 */
+    gap: 24px;
 
-    max-width: 1200px;
+    max-width: 420px;         /* 전체 폭 기준 */
     margin: 0 auto;
     padding: 24px;
   }
@@ -581,6 +581,12 @@
     display: none;                /* Chrome, Safari */
   }
 
+  #chat,
+  .calendar-card,
+  .anniversary-card {
+    min-height: 360px;   /* ⭐ 같은 기준 */
+  }
+
 
 </style>
 </head>
@@ -634,25 +640,21 @@
     </div>
   </div>
 
-  <!-- ===== 오른쪽 영역 ===== -->
-  <div id="right-panel">
-
     <!-- 📅 캘린더 카드 -->
-    <div class="calendar-card">
-      <div class="calendar-header">
-        <button onclick="moveMonth(-1)">&lt;</button>
-        <strong id="monthTitle"></strong>
-        <button onclick="moveMonth(1)">&gt;</button>
-      </div>
-      <div class="days" id="calendar"></div>
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <button onclick="moveMonth(-1)">&lt;</button>
+      <strong id="monthTitle"></strong>
+      <button onclick="moveMonth(1)">&gt;</button>
     </div>
+    <div class="days" id="calendar"></div>
+  </div>
 
-    <!-- 💍 Anniversary 카드 -->
-    <div class="anniversary-card">
-      <h3>Anniversary</h3>
-      <ul id="annivList"></ul>
-      <div id="detail" class="hidden"></div>
-    </div>
+  <!-- 💍 Anniversary 카드 -->
+  <div class="anniversary-card">
+    <h3>Anniversary</h3>
+    <ul id="annivList"></ul>
+    <div id="detail" class="hidden"></div>
   </div>
 
   <div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">

@@ -591,6 +591,17 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
+  /* 🩵 프로필 버튼 카드 */
+  .profile-btn {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 10px 26px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 카드 그림자 */
+  }
 
 
 </style>
@@ -613,11 +624,10 @@
   <h2>Our Winter ❄️</h2>
 
   <div class="button-row">
-    <button onclick="openProfile('b')">현우</button>
+   <button class="profile-btn" onclick="openProfile('b')">하현우</button>
     <span style="font-size:18px;">🩵</span>
-    <button onclick="openProfile('a')">서올</button>
+    <button class="profile-btn" onclick="openProfile('a')">한서올</button>
   </div>
-
   <div class="dday" id="ddayBox"></div>
 </div>
 

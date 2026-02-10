@@ -589,7 +589,12 @@
     color: #ffffff;
   }
 
-  
+  /* ⭐ 인트로 화면에서는 테마 버튼 항상 낮모드 */
+  #intro:not(.hidden) ~ #themeBtn {
+    background: #e5e5e5;
+    color: #333;
+  }
+
 </style>
 </head>
 

@@ -546,7 +546,6 @@
     align-items: flex-start;   /* ⭐ 카드 폭 고정 핵심 */
   }
 
-
   /* 카드 공통 스타일 */
   .calendar-card,
   .anniversary-card {
@@ -603,7 +602,19 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 카드 그림자 */
   }
 
+  /* 🪟 채팅 + 캘린더 나란히 */
+  .two-column {
+    display: flex;
+    gap: 18px;
+  }
 
+  /* 각 카드가 반반 차지 */
+  .two-column > #chat,
+  .two-column > .calendar-card {
+    flex: 1;
+  }
+
+  
 </style>
 </head>
 
@@ -682,17 +693,7 @@
 
 </div>
 
-/* 🪟 채팅 + 캘린더 나란히 */
-.two-column {
-  display: flex;
-  gap: 18px;
-}
 
-/* 각 카드가 반반 차지 */
-.two-column > #chat,
-.two-column > .calendar-card {
-  flex: 1;
-}
 
 
 <script>

@@ -231,7 +231,7 @@
 
   /* ✅ 기념일(mark) 있는 날짜만 말풍선 표시 */
   .day.mark:hover::after {
-    content: attr(data-text);ㄴ
+    content: attr(data-text);
     position: absolute;
     left: 50%;
     bottom: -34px;
@@ -379,7 +379,7 @@
 
   /* 메시지 리스트 */
   #messages {
-    height: 360px;
+    flex: 1;              /* ⭐ 남은 공간 다 차지 */
     overflow-y: auto;
     padding: 6px 4px 10px;
     display: flex;
@@ -520,9 +520,15 @@
     flex-direction: column;   /* ⭐ 세로로 쌓기 */
     gap: 24px;
 
-    max-width: 420px;         /* 전체 폭 기준 */
+    max-width: 900px;         /* 전체 폭 기준 */
     margin: 0 auto;
     padding: 24px;
+  }
+
+  .two-column {
+    display: flex;
+    gap: 24px;
+    width: 100%;
   }
 
   #top-area {
@@ -579,7 +585,7 @@
   #chat,
   .calendar-card,
   .anniversary-card {
-    min-height: 360px;   /* ⭐ 같은 기준 */
+    height: 440px;   /* ⭐ 완전 같은 높이로 고정 */
   }
 
   /* 🧊 카드 공통 그림자 */

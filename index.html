@@ -517,19 +517,14 @@
   /* ===== 메인 레이아웃 ===== */
   #main-layout {
     display: flex;
-    flex-direction: column;   /* ⭐ 세로로 쌓기 */
+    flex-direction: column;
     gap: 24px;
 
-    max-width: 900px;         /* 전체 폭 기준 */
+    max-width: 420px;   /* ⭐ 다시 카드형 폭 */
     margin: 0 auto;
     padding: 24px;
   }
 
-  .two-column {
-    display: flex;
-    gap: 24px;
-    width: 100%;
-  }
 
   #top-area {
     max-width: 420px;     /* ⭐ main-layout과 동일 */
@@ -608,18 +603,6 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 카드 그림자 */
   }
 
-  /* 🪟 채팅 + 캘린더 나란히 */
-  .two-column {
-    display: flex;
-    gap: 18px;
-  }
-
-  /* 각 카드가 반반 차지 */
-  .two-column > #chat,
-  .two-column > .calendar-card {
-    flex: 1;
-  }
-
   
 </style>
 </head>
@@ -652,44 +635,43 @@
 
 <!-- ===== 메인 레이아웃 ===== -->
 <div id="main-layout" class="hidden">
-  <div class="two-column">
-    <div id="chat">
-      <div id="messages"></div>
+  <div id="chat">
+    <div id="messages"></div>
     
-      <div class="chat-input">
-        <select id="sender">
-          <option value="서올">서올</option>
-          <option value="현우">현우</option>
-        </select>
+    <div class="chat-input">
+      <select id="sender">
+        <option value="서올">서올</option>
+        <option value="현우">현우</option>
+      </select>
       
-        <input
-          id="messageInput"
-          placeholder="메시지를 입력해줘…"
-          onkeydown="if(event.key==='Enter') sendMessage()"
-        />
+      <input
+        id="messageInput"
+        placeholder="메시지를 입력해줘…"
+        onkeydown="if(event.key==='Enter') sendMessage()"
+      />
       
-        <button onclick="sendMessage()">보내기</button>
-      </div>
-    </div>
-
-    <!-- 📅 캘린더 카드 -->
-    <div class="calendar-card">
-      <div class="calendar-header">
-        <button onclick="moveMonth(-1)">&lt;</button>
-        <strong id="monthTitle"></strong>
-        <button onclick="moveMonth(1)">&gt;</button>
-      </div>
-      <div class="days" id="calendar"></div>
+      <button onclick="sendMessage()">보내기</button>
     </div>
   </div>
 
+  <!-- 📅 캘린더 카드 -->
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <button onclick="moveMonth(-1)">&lt;</button>
+      <strong id="monthTitle"></strong>
+      <button onclick="moveMonth(1)">&gt;</button>
+    </div>
+    <div class="days" id="calendar"></div>
+  </div>
+  
   <!-- 💍 Anniversary 카드 -->
   <div class="anniversary-card">
     <h3>Anniversary</h3>
     <ul id="annivList"></ul>
     <div id="detail" class="hidden"></div>
   </div>
-
+</div>
+  
   <div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">
     <div class="profile-box" onclick="event.stopPropagation()">
       <button class="profile-close-btn" onclick="closeProfile()">X</button>

@@ -118,10 +118,6 @@
   body.night .calendar-card,
   body.night .anniversary-card {
     background: #1b1f3a;
-    color: #e6e6f0;
-  }
-
-  body.night .calendar-card {
     color: #cfd3ff;
   }
 
@@ -354,12 +350,6 @@
     background: #3a4080;
   }
 
-  .time {
-    font-size: 11px;
-    opacity: 0.6;
-    margin-top: 4px;
-  }
-
   /* ===== 채팅 전체 ===== */
   #chat {
     margin-top: 0;
@@ -462,16 +452,6 @@
     background: #e5e5e5;
   }
 
-  body.night .left .bubble {
-    background: #2a2f5a;
-    color: #fff;
-  }
-
-  body.night .right .bubble {
-    background: #3a4080;
-    color: #fff;
-  }
-
   body.night #chat {
     background: #1b1f3a;
   }
@@ -479,6 +459,10 @@
   body.night .bubble {
     background: #2a2f5a;
     color: #ffffff;
+  }
+
+  body.night .right .bubble {
+    background: #3a4080;
   }
 
   body.night .chat-input input,
@@ -608,10 +592,6 @@
     border-radius: 10px;
   }
 
-  .hidden {
-    display: none;
-  }
-
   /* 🖼 갤러리 닫기 X 버튼 */
   .gallery-close-btn {
     background: transparent;
@@ -696,7 +676,7 @@
   <div class="anniversary-card hidden" id="galleryCard">
     <div class="gallery-header">
       <h3 id="galleryTitle">Gallery</h3>
-      <button class="gallery-close-btn" onclick="toggleGallery()">⨉</button>
+      <button class="gallery-close-btn" onclick="closeGallery()">⨉</button>
     </div>
     <div id="galleryContent"></div>
   </div>
@@ -858,17 +838,6 @@
     }
   }
 
-  /* ===== 상세 ===== */
-  function showDetail(title, date) {
-    const box = document.getElementById("detail");
-    box.classList.remove("hidden");
-    box.innerHTML = `
-      <h4>${title}</h4>
-      <p>${date}</p>
-      <p>📸 사진 업로드 예정</p>
-    `;
-  }
-
   /* ===== 눈 효과 ===== */
   const canvas = document.getElementById("snow");
   const ctx = canvas.getContext("2d");
@@ -924,7 +893,12 @@
     });
   }
 
-  setInterval(drawSnow, 33);
+  function animateSnow() {
+    drawSnow();
+    requestAnimationFrame(animateSnow);
+  }
+  animateSnow();
+
 
   /* 테마 */
   function toggleTheme() {
@@ -1071,9 +1045,10 @@ function openGallery(dateString) {
 }
 
 // 닫기 버튼
-function toggleGallery() {
+function closeGallery() {
   document.getElementById("galleryCard").classList.add("hidden");
 }
+
 
   
 </script>

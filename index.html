@@ -535,7 +535,7 @@
   .anniversary-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 16px;
+    padding: 12px 16px;
   }
 
   /* 🌙 홈 + 밤 모드일 때만 */
@@ -621,6 +621,11 @@
     color: #ffffff;
   }
 
+  #galleryCard {
+    margin-top: -10px;  /* 캘린더와 간격 살짝 줄임 */
+  }
+
+
   
 </style>
 </head>
@@ -666,7 +671,7 @@
   <!-- 🖼 갤러리 카드 -->
   <div class="anniversary-card hidden" id="galleryCard">
     <div class="gallery-header">
-      <h3>Gallery</h3>
+      <h3 id="galleryTitle">Gallery</h3>
       <button class="gallery-close-btn" onclick="toggleGallery()">⨉</button>
     </div>
     <div id="galleryContent"></div>
@@ -1022,6 +1027,11 @@ function openGallery(dateString) {
   const galleryContent = document.getElementById("galleryContent");
 
   galleryContent.innerHTML = "";
+
+  const title = document.getElementById("galleryTitle");
+
+  const [year, month, day] = dateString.split("-");
+  title.textContent = `${year}년 ${Number(month)}월 ${Number(day)}일`;
 
   if (galleryData[dateString]) {
     galleryData[dateString].forEach(url => {

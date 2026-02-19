@@ -762,12 +762,8 @@
   /* ===== 캘린더 렌더 ===== */
   function renderCalendar() {
     const cal = document.getElementById("calendar");
-    const list = document.getElementById("annivList");
-    const detail = document.getElementById("detail");
-
+    
     cal.innerHTML = "";
-    list.innerHTML = "";
-    detail.classList.add("hidden");
 
     const y = current.getFullYear();
     const m = current.getMonth();
@@ -807,7 +803,6 @@
       if (days > 1 && days % 100 === 0) {
         label = `❄️ ${days}일`;
         icon = "❄️";
-        list.innerHTML += `<li onclick="showDetail('${days}일','${cellDate.toLocaleDateString()}')">❄️ ${days}일</li>`;
       }
 
       // 주년
@@ -817,7 +812,6 @@
         const yearDiff = cellDate.getFullYear() - startDate.getFullYear();
         label = `💍 ${yearDiff}주년`;
         icon = "💍";
-        list.innerHTML += `<li onclick="showDetail('${yearDiff}주년','${cellDate.toLocaleDateString()}')">💍 ${yearDiff}주년</li>`;
       }
 
       const dateString = `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;

@@ -597,6 +597,31 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 카드 그림자 */
   }
 
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #galleryContent {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #galleryContent img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+
   
 </style>
 </head>
@@ -659,11 +684,14 @@
   </div>
   
   <!-- 💍 Anniversary 카드 -->
-  <div class="anniversary-card">
-    <h3>Anniversary</h3>
-    <ul id="annivList"></ul>
-    <div id="detail" class="hidden"></div>
+  <div class="anniversary-card hidden" id="galleryCard">
+    <div class="gallery-header">
+      <h3>Gallery</h3>
+      <button onclick="toggleGallery()">닫기</button>
+    </div>
+    <div id="galleryContent"></div>
   </div>
+
 </div>
   
   <div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">
@@ -674,8 +702,6 @@
   </div>
 
 </div>
-
-
 
 
 <script>
@@ -794,12 +820,17 @@
         list.innerHTML += `<li onclick="showDetail('${yearDiff}주년','${cellDate.toLocaleDateString()}')">💍 ${yearDiff}주년</li>`;
       }
 
+      const dateString = `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+
       cal.innerHTML += `
-        <div class="day ${label ? "mark" : ""}" data-text="${label}">
+        <div class="day ${label ? "mark" : ""}" 
+          data-text="${label}"
+          onclick="openGallery('${dateString}')">
           ${d}
           <span>${icon}</span>
         </div>
       `;
+
     }
   }
 
@@ -979,6 +1010,42 @@
     });
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
+
+  // 📅 날짜별 사진 데이터
+const galleryData = {
+  "2026-02-17": [
+    "여기에_깃허브_이미지_URL_넣기"
+  ],
+  "2026-06-03": [
+    "여기에_다른_이미지_URL"
+  ]
+};
+
+// 날짜 클릭했을 때 실행
+function openGallery(dateString) {
+  const galleryCard = document.getElementById("galleryCard");
+  const galleryContent = document.getElementById("galleryContent");
+
+  galleryContent.innerHTML = "";
+
+  if (galleryData[dateString]) {
+    galleryData[dateString].forEach(url => {
+      const img = document.createElement("img");
+      img.src = url;
+      galleryContent.appendChild(img);
+    });
+  } else {
+    galleryContent.innerHTML = "<p>사진이 아직 없어요 🤍</p>";
+  }
+
+  galleryCard.classList.remove("hidden");
+}
+
+// 닫기 버튼
+function toggleGallery() {
+  document.getElementById("galleryCard").classList.add("hidden");
+}
+
   
 </script>
 </body>

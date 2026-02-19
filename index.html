@@ -969,7 +969,7 @@
 
   const messagesDiv = document.getElementById("messages");
 
-  db.ref("messages").limitToLast(200).on((snapshot) => {
+  db.ref("messages").limitToLast(200).on("value", (snapshot) => {
     messagesDiv.innerHTML = "";
 
     snapshot.forEach((child) => {

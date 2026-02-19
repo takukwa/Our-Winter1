@@ -844,8 +844,8 @@
 
   let w, h;
   let snowflakes = [];
-  let snowCount = 80;      // 기본 눈 개수
-  let snowSpeed = 1;      // 기본 속도
+  let snowCount = 60;      // 기본 눈 개수
+  let snowSpeed = 0.4;      // 기본 속도
 
   function resizeSnow() {
     w = canvas.width = window.innerWidth;
@@ -883,7 +883,7 @@
 
   function moveSnow() {
     snowflakes.forEach(f => {  
-      f.y += Math.pow(f.d, 2) + 0.5 * snowSpeed;
+      f.y += 0.3 * f.d * snowSpeed;
       f.x += Math.sin(f.y * 0.01);
 
       if (f.y > h) {

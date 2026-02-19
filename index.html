@@ -860,38 +860,47 @@
       snowflakes.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        r: Math.random() * 3 + 1,
-        d: Math.random() + 1
+        r: Math.random() * 4 + 1,              // 크기 다양화
+        speed: Math.random() * 1.5 + 0.3,     // ⭐ 각자 다른 속도
+        drift: Math.random() * 2 - 1,         // 좌우 바람
+        opacity: Math.random() * 0.5 + 0.4    // 투명도 다양화
       });
     }
   }
+
   createSnow();
 
   function drawSnow() {
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-    ctx.beginPath();
 
     snowflakes.forEach(f => {
-      ctx.moveTo(f.x, f.y);
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
       ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.fill();
     });
 
-    ctx.fill();
     moveSnow();
   }
 
   function moveSnow() {
-    snowflakes.forEach(f => {  
-      f.y += 0.3 * f.d * snowSpeed;
-      f.x += Math.sin(f.y * 0.01);
+    snowflakes.forEach(f => {
 
+      // 기본 낙하
+      f.y += f.speed * snowSpeed;
+
+      // 바람 + 불규칙 흔들림
+      f.x += Math.sin(f.y * 0.01) * f.drift + (Math.random() - 0.5) * 0.5;
+
+      // 화면 벗어나면 재생성
       if (f.y > h) {
         f.y = -10;
         f.x = Math.random() * w;
+        f.speed = Math.random() * 1.5 + 0.3;   // 다시 랜덤 속도
       }
     });
   }
+
 
   function animateSnow() {
     drawSnow();

@@ -535,7 +535,7 @@
   .anniversary-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 12px 16px;
+    padding: 8px 16px;   /* 위아래 더 줄임 */
   }
 
   /* 🌙 홈 + 밤 모드일 때만 */
@@ -607,7 +607,7 @@
 
   /* 🖼 갤러리 닫기 X 버튼 */
   .gallery-close-btn {
-    background: none;
+    background: transparent;
     border: none;
     font-size: 20px;
     cursor: pointer;
@@ -616,15 +616,22 @@
     color: #333;
   }
 
+  .gallery-close-btn:hover {
+    background: transparent;   /* ⭐ 회색 제거 */
+  }
+
   /* 🌙 밤모드 */
   body.night .gallery-close-btn {
     color: #ffffff;
   }
 
-  #galleryCard {
-    margin-top: -10px;  /* 캘린더와 간격 살짝 줄임 */
+  body.night .gallery-close-btn:hover {
+    background: transparent;
   }
 
+  #galleryCard {
+    margin-top: -18px;   /* 더 붙이기 */
+  }
 
   
 </style>

@@ -497,23 +497,6 @@
     background: #3a4080;
   }
 
-  /* 📱 모바일 대응 */
-  @media (max-width: 768px) {
-    #main-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    #right-panel {
-      order: 1;   /* 캘린더 + 애니벌서리 위 */
-    }
-
-    #chat {
-      order: 2;   /* 채팅 아래 */
-    }
-  }
-
   /* ===== 메인 레이아웃 ===== */
   #main-layout {
     display: flex;
@@ -654,6 +637,26 @@
 
 <!-- ===== 메인 레이아웃 ===== -->
 <div id="main-layout" class="hidden">
+  <!-- 📅 캘린더 카드 -->
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <button onclick="moveMonth(-1)">&lt;</button>
+      <strong id="monthTitle"></strong>
+      <button onclick="moveMonth(1)">&gt;</button>
+    </div>
+    <div class="days" id="calendar"></div>
+  </div>
+  
+  <!-- 🖼 갤러리 카드 -->
+  <div class="anniversary-card hidden" id="galleryCard">
+    <div class="gallery-header">
+      <h3>Gallery</h3>
+      <button onclick="toggleGallery()">닫기</button>
+    </div>
+    <div id="galleryContent"></div>
+  </div>
+
+  <!-- 💬 채팅 카드 -->
   <div id="chat">
     <div id="messages"></div>
     
@@ -673,24 +676,6 @@
     </div>
   </div>
 
-  <!-- 📅 캘린더 카드 -->
-  <div class="calendar-card">
-    <div class="calendar-header">
-      <button onclick="moveMonth(-1)">&lt;</button>
-      <strong id="monthTitle"></strong>
-      <button onclick="moveMonth(1)">&gt;</button>
-    </div>
-    <div class="days" id="calendar"></div>
-  </div>
-  
-  <!-- 💍 Anniversary 카드 -->
-  <div class="anniversary-card hidden" id="galleryCard">
-    <div class="gallery-header">
-      <h3>Gallery</h3>
-      <button onclick="toggleGallery()">닫기</button>
-    </div>
-    <div id="galleryContent"></div>
-  </div>
 
 </div>
   

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-  
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Our Winter</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <style>
   body {
@@ -513,17 +513,14 @@
   }
 
   /* 카드 공통 스타일 */
-  .calendar-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px;
-  }
-
+  .calendar-card,
   .anniversary-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 8px 16px;  /* 위아래 8px로 줄임 */
   }
+
+  .calendar-card { padding: 16px; }
+  .anniversary-card { padding: 8px 16px; }
 
   #galleryCard h3 {
     margin-top: 5px;
@@ -701,16 +698,13 @@
     </div>
   </div>
 
-
 </div>
   
-  <div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">
-    <div class="profile-box" onclick="event.stopPropagation()">
-      <button class="profile-close-btn" onclick="closeProfile()">X</button>
-      <div id="profileContent"></div>
-    </div>
+<div id="profileModal" class="profile-modal hidden" onclick="closeProfile()">
+  <div class="profile-box" onclick="event.stopPropagation()">
+    <button class="profile-close-btn" onclick="closeProfile()">X</button>
+    <div id="profileContent"></div>
   </div>
-
 </div>
 
 
@@ -772,35 +766,38 @@
   /* ===== 캘린더 렌더 ===== */
   function renderCalendar() {
     const cal = document.getElementById("calendar");
-    
-    cal.innerHTML = "";
 
     const y = current.getFullYear();
     const m = current.getMonth();
 
     document.getElementById("monthTitle").innerText = `${y}년 ${m + 1}월`;
 
+    let html = "";   // ⭐ 핵심
+
+    // 요일
     "일월화수목금토".split("").forEach(d => {
-      cal.innerHTML += `<div>${d}</div>`;
+      html += `<div>${d}</div>`;
     });
 
     const firstDay = new Date(y, m, 1).getDay();
     const lastDate = new Date(y, m + 1, 0).getDate();
 
-    for (let i = 0; i < firstDay; i++) cal.innerHTML += `<div></div>`;
+    // 앞 빈칸
+    for (let i = 0; i < firstDay; i++) {
+      html += `<div></div>`;
+    }
 
+    // 날짜
     for (let d = 1; d <= lastDate; d++) {
       const cellDate = new Date(y, m, d);
       let label = "";
       let icon = "";
 
-      // 사귄 날
       if (cellDate.getTime() === startDate.getTime()) {
         label = "🩵 눈이 내리기 시작한 ";
         icon = "🩵";
       }
 
-      // 생일
       birthdays.forEach(b => {
         if (b.m === m && b.d === d) {
           label = b.text;
@@ -808,35 +805,38 @@
         }
       });
 
-      // 100일 단위
       const days = Math.floor((cellDate - startDate) / 86400000) + 1;
       if (days > 1 && days % 100 === 0) {
         label = `❄️ ${days}일`;
         icon = "❄️";
       }
 
-      // 주년
-      if (cellDate.getDate() === startDate.getDate() &&
-          cellDate.getMonth() === startDate.getMonth() &&
-          cellDate.getFullYear() > startDate.getFullYear()) {
+      if (
+        cellDate.getDate() === startDate.getDate() &&
+        cellDate.getMonth() === startDate.getMonth() &&
+        cellDate.getFullYear() > startDate.getFullYear()
+      ) {
         const yearDiff = cellDate.getFullYear() - startDate.getFullYear();
         label = `💍 ${yearDiff}주년`;
         icon = "💍";
       }
 
-      const dateString = `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+      const dateString = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
-      cal.innerHTML += `
-        <div class="day ${label ? "mark" : ""}" 
+      html += `
+        <div class="day ${label ? "mark" : ""}"
           data-text="${label}"
           onclick="openGallery('${dateString}')">
           ${d}
           <span>${icon}</span>
         </div>
       `;
-
     }
+
+    // ⭐ 마지막에 한 번만 렌더링
+    cal.innerHTML = html;
   }
+
 
   /* ===== 눈 효과 ===== */
   const canvas = document.getElementById("snow");
@@ -969,7 +969,7 @@
 
   const messagesDiv = document.getElementById("messages");
 
-  db.ref("messages").on("value", (snapshot) => {
+  db.ref("messages").limitToLast(200).on((snapshot) => {
     messagesDiv.innerHTML = "";
 
     snapshot.forEach((child) => {

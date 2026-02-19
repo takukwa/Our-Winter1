@@ -65,11 +65,10 @@
 
   /* ===== 홈 ===== */
   #home {
-    padding: 16px;
-    max-width: 420px;
-    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
-
   .dday {
     background: #fff;
     border-radius: 14px;
@@ -365,7 +364,9 @@
   #chat {
     margin-top: 0;
     width: 100%;
-    height: 440px;
+    min-height: 420px;
+    height: 55vh;   /* ⭐ 화면 기준 높이 */
+    max-height: 600px;
 
     background: #ffffff;
     border-radius: 18px;
@@ -504,13 +505,13 @@
     gap: 20px;
     max-width: 420px;
     margin: 0 auto;
-    padding: 10px 24px 24px 24px;  /* ⭐ 위만 20px */
+    padding: 20px 16px 24px 16px;
   }
 
   #top-area {
     max-width: 420px;
     margin: 0 auto;
-    padding: 24px 24px 0 24px;  /* ⭐ 아래 padding 제거 */
+    padding: 24px 16px 0 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -601,11 +602,10 @@
   }
 
   #galleryContent img {
-    width: 100px;
+    width: calc(33.333% - 7px);
     height: 100px;
     object-fit: cover;
     border-radius: 10px;
-    cursor: pointer;
   }
 
   .hidden {
@@ -636,7 +636,21 @@
     background: transparent;
   }
 
-  
+  .chat-input input {
+    min-height: 40px;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    body {
+      padding-bottom: 80px;
+    }
+  }
+
+  html, body {
+    overscroll-behavior: none;
+  }
+
+
 </style>
 </head>
 

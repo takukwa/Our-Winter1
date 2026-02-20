@@ -1018,37 +1018,37 @@
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
 
-  // 📅 날짜별 사진 데이터
-const galleryData = {
-  "2026-02-17": [
-    "여기에_깃허브_이미지_URL_넣기"
-  ],
-  "2026-06-03": [
-    "여기에_다른_이미지_URL"
-  ]
-};
 
 // 날짜 클릭했을 때 실행
 function openGallery(dateString) {
   const galleryCard = document.getElementById("galleryCard");
   const galleryContent = document.getElementById("galleryContent");
+  const title = document.getElementById("galleryTitle");
 
   galleryContent.innerHTML = "";
-
-  const title = document.getElementById("galleryTitle");
 
   const [year, month, day] = dateString.split("-");
   title.textContent = `${year}년 ${Number(month)}월 ${Number(day)}일`;
 
-  if (galleryData[dateString]) {
-    galleryData[dateString].forEach(url => {
-      const img = document.createElement("img");
-      img.src = url;
+  let found = false;
+
+  // 최대 10장까지 자동 탐색
+  for (let i = 1; i <= 10; i++) {
+    const img = new Image();
+    img.src = `images/${dateString}_${i}.jpg`;
+
+    img.onload = function () {
       galleryContent.appendChild(img);
-    });
-  } else {
-    galleryContent.innerHTML = "<p>사진이 아직 없어요 🤍</p>";
+      found = true;
+    };
   }
+
+  // 0.3초 후 아무것도 없으면 안내 문구
+  setTimeout(() => {
+    if (!found) {
+      galleryContent.innerHTML = "<p>이 날의 추억은 아직 없어요 🤍</p>";
+    }
+  }, 300);
 
   galleryCard.classList.remove("hidden");
 }
